@@ -117,6 +117,7 @@
     margin: 0 auto;
     padding: 0 24px;
     position: relative;
+    z-index: 3;
   }
 
   /* Dividers with Lavender Shimmer */
@@ -200,13 +201,13 @@
 
   .hero-inner {
     position: relative;
-    padding: 50px 28px;
+    padding: 42px 28px;
     max-width: 520px;
     width: 100%;
     border: 1px solid rgba(183, 148, 244, 0.4);
     background: rgba(14, 5, 23, 0.85);
     backdrop-filter: blur(12px);
-    border-radius: 12px;
+    border-radius: 14px;
     box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 35px rgba(144, 97, 249, 0.25);
     animation: heroFloat 5s ease-in-out infinite alternate, borderPulse 4s ease-in-out infinite alternate;
   }
@@ -237,7 +238,7 @@
     100% { width: 26px; height: 26px; border-color: var(--amethyst-bright); filter: drop-shadow(0 0 6px var(--amethyst-bright)); }
   }
 
-  /* Lord Ganesha Icon Animation */
+  /* Lord Ganesha Emblem */
   .ganesha-container {
     width: 80px;
     height: 80px;
@@ -300,7 +301,7 @@
   }
 
   .hero .sub {
-    margin-top: 18px;
+    margin-top: 16px;
     font-family: 'Cormorant Garamond', serif;
     font-size: 18px;
     letter-spacing: 0.08em;
@@ -363,10 +364,44 @@
     100% { transform: scale(1.15); opacity: 1; }
   }
 
-  /* Invitation Content */
+  /* 2nd Page: Invitation Block with Side Pillars */
   .invite-block {
+    position: relative;
     padding: 80px 0 50px;
     text-align: center;
+    overflow: hidden;
+  }
+
+  .pillar-side-drawing {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 82%;
+    max-height: 520px;
+    width: clamp(90px, 15vw, 160px);
+    pointer-events: none;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    opacity: 0.85;
+  }
+
+  .pillar-side-drawing img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: sepia(100%) hue-rotate(225deg) saturate(280%) brightness(110%) contrast(115%) drop-shadow(0 0 16px rgba(192, 132, 252, 0.45));
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+  }
+
+  .pillar-side-drawing.left-side {
+    left: clamp(8px, 2.5vw, 35px);
+  }
+
+  .pillar-side-drawing.right-side {
+    right: clamp(8px, 2.5vw, 35px);
+    transform: translateY(-50%) scaleX(-1);
   }
 
   .invite-block .lead {
@@ -397,36 +432,30 @@
 
   .invite-block .closing {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 19px;
+    font-size: 20px;
     color: var(--lavender-soft);
-    max-width: 480px;
+    max-width: 520px;
     margin: 24px auto 0;
     line-height: 1.8;
   }
 
-  .placeholder {
-    color: var(--lavender-glow);
-    border-bottom: 1px dashed rgba(214, 187, 251, 0.6);
-    padding: 0 4px;
-    font-style: italic;
-    transition: all 0.3s;
-  }
-  .placeholder:hover {
-    border-bottom-color: var(--lavender-light);
-    color: #fff;
-    text-shadow: 0 0 10px rgba(192, 132, 252, 0.8);
+  .parent-name {
+    color: var(--lavender-light);
+    font-weight: 600;
+    letter-spacing: 0.03em;
   }
 
-  /* Ceremony Card */
+  /* Visual Journey & Sacred Celebration Section */
   .events {
-    padding: 30px 0 80px;
+    padding: 40px 0 90px;
+    position: relative;
   }
 
   .events h2 {
     font-family: 'Cinzel', serif;
     text-align: center;
-    font-size: 28px;
-    letter-spacing: 0.12em;
+    font-size: 30px;
+    letter-spacing: 0.14em;
     margin-bottom: 6px;
   }
 
@@ -435,31 +464,127 @@
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     color: var(--lavender-soft);
+    font-size: 18px;
+    margin-bottom: 24px;
+  }
+
+  /* Lord Murugan Divine Feature with Luminous Violet Aura */
+  .murugan-journey-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto 26px;
+    text-align: center;
+  }
+
+  .murugan-journey-container {
+    width: 145px;
+    max-width: 48vw;
+    margin: 0 auto 12px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: muruganFloat 4s ease-in-out infinite alternate;
+  }
+
+  .murugan-journey-container::before {
+    content: '';
+    position: absolute;
+    inset: -15px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(192, 132, 252, 0.45), rgba(144, 97, 249, 0.2) 55%, transparent 72%);
+    animation: muruganHalo 3s ease-in-out infinite alternate;
+    z-index: -1;
+  }
+
+  .murugan-journey-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    /* Violet / Lavender Hue-Tint Filter */
+    filter: sepia(100%) hue-rotate(225deg) saturate(280%) brightness(115%) contrast(110%) drop-shadow(0 0 20px rgba(192, 132, 252, 0.85));
+  }
+
+  .murugan-caption {
+    font-family: 'Cinzel', serif;
+    font-size: 11.5px;
+    letter-spacing: 0.28em;
+    color: var(--gold-accent);
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(192, 132, 252, 0.6);
+  }
+
+  .murugan-subcaption {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
     font-size: 17px;
-    margin-bottom: 36px;
+    color: var(--lavender-soft);
+    margin-top: 4px;
+  }
+
+  @keyframes muruganFloat {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(-7px) scale(1.03); }
+  }
+
+  @keyframes muruganHalo {
+    0% { transform: scale(0.85); opacity: 0.5; }
+    100% { transform: scale(1.22); opacity: 0.95; }
+  }
+
+  .journey-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
   }
 
   .event-card {
+    width: 100%;
     border: 1px solid rgba(183, 148, 244, 0.45);
-    padding: 48px 32px;
+    padding: 42px 30px;
     text-align: center;
     position: relative;
     background: linear-gradient(180deg, rgba(34, 14, 61, 0.9), rgba(14, 5, 23, 0.96));
     backdrop-filter: blur(8px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
-    border-radius: 12px;
+    border-radius: 14px;
     transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.4s ease, box-shadow 0.4s ease;
   }
+
   .event-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-6px);
     border-color: rgba(214, 187, 251, 0.85);
     box-shadow: 0 25px 55px rgba(0, 0, 0, 0.9), 0 0 35px rgba(192, 132, 252, 0.4);
+  }
+
+  .card-icon {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-icon svg {
+    width: 100%;
+    height: 100%;
+    stroke: var(--lavender-glow);
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 10px rgba(192, 132, 252, 0.7));
   }
 
   .event-card .tag {
     font-family: 'Cinzel', serif;
     font-size: 11px;
-    letter-spacing: 0.3em;
+    letter-spacing: 0.32em;
     color: var(--amethyst-bright);
     text-transform: uppercase;
   }
@@ -467,42 +592,42 @@
   .event-card h3 {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 600;
-    font-size: 36px;
+    font-size: 34px;
     color: var(--lavender-light);
-    margin: 12px 0 16px;
+    margin: 8px 0 14px;
   }
 
   .event-meta {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 16px;
     flex-wrap: wrap;
     font-family: 'Cormorant Garamond', serif;
     font-size: 19px;
     color: var(--lavender-glow);
-    margin-bottom: 18px;
+    margin-bottom: 16px;
     font-weight: 600;
   }
 
   .event-card p.desc {
     font-family: 'EB Garamond', serif;
     font-style: italic;
-    font-size: 16.5px;
-    color: rgba(247, 242, 255, 0.9);
-    max-width: 420px;
+    font-size: 17px;
+    color: rgba(247, 242, 255, 0.92);
+    max-width: 450px;
     margin: 0 auto;
     line-height: 1.75;
   }
 
   .event-card .venue-box {
-    margin-top: 28px;
-    padding-top: 22px;
+    margin-top: 24px;
+    padding-top: 20px;
     border-top: 1px solid rgba(183, 148, 244, 0.25);
   }
 
   .event-card .venue-title {
     font-family: 'Cinzel', serif;
-    font-size: 12px;
+    font-size: 11.5px;
     letter-spacing: 0.25em;
     color: var(--amethyst-bright);
     text-transform: uppercase;
@@ -515,32 +640,112 @@
     color: var(--lavender-soft);
     line-height: 1.4;
     font-weight: 600;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
+  }
+
+  /* Journey Path Transition */
+  .journey-transition {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 24px 0;
+    position: relative;
+  }
+
+  .journey-line {
+    width: 2px;
+    height: 38px;
+    background: linear-gradient(180deg, var(--amethyst-bright), var(--lavender-accent));
+    position: relative;
+    overflow: hidden;
+  }
+
+  .journey-line::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #fff, transparent);
+    animation: flowDown 2.4s infinite linear;
+  }
+
+  @keyframes flowDown {
+    0% { top: -100%; }
+    100% { top: 100%; }
+  }
+
+  .journey-badge {
+    padding: 7px 18px;
+    border-radius: 20px;
+    background: rgba(34, 14, 61, 0.85);
+    border: 1px dashed var(--lavender-accent);
+    color: var(--lavender-glow);
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin: 8px 0;
+    box-shadow: 0 0 16px rgba(192, 132, 252, 0.25);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .journey-arrow {
+    width: 14px;
+    height: 14px;
+    stroke: var(--amethyst-bright);
+    stroke-width: 2;
+    fill: none;
+    animation: arrowBounce 1.8s infinite ease-in-out;
+  }
+
+  @keyframes arrowBounce {
+    0%, 100% { transform: translateY(0); opacity: 0.6; }
+    50% { transform: translateY(4px); opacity: 1; stroke: #fff; }
   }
 
   .map-btn {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 24px;
-    margin-top: 8px;
-    background: rgba(144, 97, 249, 0.18);
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 28px;
+    background: rgba(144, 97, 249, 0.2);
     border: 1px solid var(--amethyst-bright);
     border-radius: 30px;
-    color: var(--lavender-glow);
+    color: var(--lavender-light);
     font-family: 'Cinzel', serif;
     font-size: 11px;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.2em;
     text-decoration: none;
     text-transform: uppercase;
-    transition: all 0.3s ease;
+    transition: all 0.35s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  }
+
+  .map-btn svg {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.3s ease;
   }
 
   .map-btn:hover {
     background: var(--amethyst-bright);
     color: var(--violet-deep);
-    box-shadow: 0 0 20px rgba(192, 132, 252, 0.6);
+    box-shadow: 0 0 24px rgba(192, 132, 252, 0.65);
     transform: scale(1.04);
+  }
+
+  .map-btn:hover svg {
+    transform: translateY(-2px);
   }
 
   /* Quote Section */
@@ -596,6 +801,25 @@
   .reveal.active {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+
+  @media (max-width: 600px) {
+    .event-card {
+      padding: 34px 20px;
+    }
+    .event-card h3 {
+      font-size: 28px;
+    }
+    .event-card .venue-address {
+      font-size: 19px;
+    }
+    .map-btn {
+      width: 100%;
+      padding: 12px 16px;
+    }
+    .pillar-side-drawing {
+      display: none;
+    }
   }
 </style>
 </head>
@@ -720,50 +944,141 @@
   <div class="scroll-indicator">Scroll to view</div>
 </section>
 
-<!-- INVITATION TEXT WITH COUPLE IMAGE -->
+<!-- 2ND PAGE: INVITATION TEXT WITH FAMILY DETAILS & SIDE PILLARS -->
 <section class="invite-block reveal">
-  <div class="frame">
+  
+  <!-- Left Side Scaled Temple Pillar -->
+  <div class="pillar-side-drawing left-side">
+    <img src="./pillar.png" alt="Temple Pillar Left">
+  </div>
 
+  <!-- Right Side Scaled Temple Pillar (Mirrored) -->
+  <div class="pillar-side-drawing right-side">
+    <img src="./pillar.png" alt="Temple Pillar Right">
+  </div>
+
+  <div class="frame">
     <div class="couple-image-container" title="Bride &amp; Groom">
       <img src="./couple.png" alt="Bride &amp; Groom">
     </div>
 
-    <p class="lead">With the divine blessings of Lord Ganesha and our beloved elders, we cordially invite you to celebrate the sacred union of our hearts and families.</p>
+    <p class="lead">With the divine blessings of Lord Ganesha, Lord Murugan, and our beloved elders, we cordially invite you to celebrate the sacred union of our hearts and families.</p>
     <div class="divider"><span class="line"></span><span class="mark">✦</span><span class="line"></span></div>
     <div class="names shimmer-lavender">Arundathi</div>
     <div class="amp-small">&amp;</div>
     <div class="names shimmer-lavender">Prabin</div>
-    <p class="closing">Daughter of <span class="placeholder">[ Parents' Names ]</span><br>&amp;<br>Son of <span class="placeholder">[ Parents' Names ]</span></p>
+    <p class="closing">
+      Daughter of <span class="parent-name">Gnanasekaran. N &amp; Jeyakumari. G</span><br>
+      &amp;<br>
+      Son of <span class="parent-name">Retnamony. C &amp; Selvi. C</span>
+    </p>
   </div>
 </section>
 
-<!-- WEDDING CEREMONY DETAILS -->
+<!-- 3RD/4TH PAGE: VISUAL WEDDING JOURNEY (VIOLET-TINTED LORD MURUGAN ABOVE THE SACRED BEGINNING) -->
 <section class="events">
   <div class="frame">
-    <h2 class="reveal shimmer-lavender">The Holy Matrimony</h2>
-    <p class="events-sub reveal">The sacred vows and auspicious muhurtham</p>
+    <h2 class="reveal shimmer-lavender">The Sacred Journey</h2>
+    <p class="events-sub reveal">From holy blessings to joyful celebrations</p>
 
-    <div class="event-card reveal">
-      <div class="tag">Sacred Ceremony</div>
-      <h3>The Wedding</h3>
+    <!-- Divine Lord Murugan Feature with Violet Filter -->
+    <div class="murugan-journey-header reveal">
+      <div class="murugan-journey-container" title="Lord Murugan Divine Presence">
+        <img src="./murugar.png" alt="Lord Murugan">
+      </div>
+      <div class="murugan-caption">✦ In The Divine Abode of Lord Murugan ✦</div>
+      <div class="murugan-subcaption">Om Saravana Bhava</div>
+    </div>
+
+    <div class="journey-wrapper">
       
-      <div class="event-meta">
-        <span>Monday, 14 December 2026</span>
-        <span>&bull;</span>
-        <span>Muhurtham: <span class="placeholder">[ Time ]</span></span>
-      </div>
-
-      <p class="desc">As we take the seven sacred steps together around the holy fire, your prayers, blessings, and gracious presence will make this moment truly unforgettable.</p>
-
-      <div class="venue-box">
-        <div class="venue-title">Venue</div>
-        <div class="venue-address">
-          AKS RAJADURAI MAHAL
+      <!-- 1. THE SACRED BEGINNING: LORD MURUGAN TEMPLE -->
+      <div class="event-card reveal">
+        <!-- Vel (Lord Murugan Sacred Emblem) -->
+        <div class="card-icon" title="Lord Murugan Divine Grace">
+          <svg viewBox="0 0 100 100">
+            <path d="M50 8 C42 22 36 38 42 56 C45 64 50 68 50 78 L50 94" />
+            <path d="M50 8 C58 22 64 38 58 56 C55 64 50 68 50 78" />
+            <path d="M50 8 L50 78" />
+            <circle cx="50" cy="94" r="2.5" fill="currentColor" />
+            <path d="M40 94 L60 94" />
+            <path d="M38 44 Q50 36 62 44" />
+          </svg>
         </div>
-        <a href="https://share.google/eRhAjQS00H3j8AMsl" target="_blank" rel="noopener noreferrer" class="map-btn">
-          📍 View on Google Maps
-        </a>
+
+        <div class="tag">✦ The Sacred Beginning ✦</div>
+        <h3>The Wedding Ceremony</h3>
+        
+        <div class="event-meta">
+          <span>Monday, 14 December 2026</span>
+          <span>&bull;</span>
+          <span>Auspicious Muhurtham</span>
+        </div>
+
+        <p class="desc">"With the divine blessings of Lord Murugan, we begin our journey of togetherness as we exchange sacred vows and take the holy steps around the sacred fire."</p>
+
+        <div class="venue-box">
+          <div class="venue-title">Ceremony Venue</div>
+          <div class="venue-address">
+            Lord Murugan Temple
+          </div>
+          <a href="https://share.google/tZiTgfrglo2SPFGct" target="_blank" rel="noopener noreferrer" class="map-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            View Temple Location
+          </a>
+        </div>
       </div>
+
+      <!-- VISUAL JOURNEY CONNECTOR -->
+      <div class="journey-transition reveal">
+        <div class="journey-line"></div>
+        <div class="journey-badge">
+          <span>✦</span>
+          <span>The Celebration Continues</span>
+          <span>✦</span>
+        </div>
+        <svg class="journey-arrow" viewBox="0 0 24 24">
+          <path d="M7 10l5 5 5-5" />
+        </svg>
+      </div>
+
+      <!-- 2. THE CELEBRATION: FEAST • FAMILY • MEMORIES -->
+      <div class="event-card reveal">
+        <!-- Festive Celebration Icon -->
+        <div class="card-icon" title="Feast & Photography">
+          <svg viewBox="0 0 100 100">
+            <path d="M30 38 L30 65 Q30 75 50 75 Q70 75 70 65 L70 38 Z" />
+            <path d="M24 38 L76 38" />
+            <path d="M50 18 Q45 28 50 38 Q55 28 50 18" fill="currentColor" opacity="0.6"/>
+            <path d="M36 24 Q32 30 36 38" stroke-dasharray="2 2"/>
+            <path d="M64 24 Q68 30 64 38" stroke-dasharray="2 2"/>
+            <circle cx="50" cy="56" r="6" />
+          </svg>
+        </div>
+
+        <div class="tag">Feast &bull; Family &bull; Memories</div>
+        <h3>Post-Wedding Celebration</h3>
+        
+        <div class="event-meta">
+          <span>Following The Holy Ceremony</span>
+          <span>&bull;</span>
+          <span>Food &bull; Joy &bull; Photography</span>
+        </div>
+
+        <p class="desc">"Join us for a delightful traditional feast and celebrate with us as we capture timeless moments, laughter, and cherished memories together."</p>
+
+        <div class="venue-box">
+          <div class="venue-title">Celebration Venue</div>
+          <div class="venue-address">
+            Banquet Hall &amp; Dining
+          </div>
+          <a href="https://share.google/MG87tKQKnnyHF1qcn" target="_blank" rel="noopener noreferrer" class="map-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            View Celebration Venue
+          </a>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
