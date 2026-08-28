@@ -9,14 +9,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Tangerine:wght@700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --maroon: #26050b;
-    --maroon-deep: #140205;
-    --ivory: #fcf6ed;
-    --gold: #c59b3f;
-    --gold-bright: #fad980;
-    --gold-light: #fff2c8;
-    --rose: #a85864;
-    --sandal: #e8d7be;
+    --violet-deep: #0e0517;
+    --violet-night: #1a0b2e;
+    --violet-card: #220e3d;
+    --lavender-light: #f7f2ff;
+    --lavender-soft: #e2d4f8;
+    --lavender-glow: #d6bbfb;
+    --lavender-accent: #b794f4;
+    --amethyst: #9061f9;
+    --amethyst-bright: #c084fc;
+    --gold-accent: #f3d9fa;
   }
 
   * {
@@ -30,24 +32,24 @@
   }
 
   body {
-    background: var(--maroon-deep);
-    color: var(--ivory);
+    background: var(--violet-deep);
+    color: var(--lavender-light);
     font-family: 'EB Garamond', serif;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Ambient Texture & Dynamic Gradients */
+  /* Ambient Texture & Violet-Lavender Gradients */
   .bg-ambient {
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 0;
     background:
-      radial-gradient(circle at 50% 15%, rgba(250, 217, 128, 0.18), transparent 60%),
-      radial-gradient(circle at 10% 90%, rgba(168, 88, 100, 0.22), transparent 50%),
-      radial-gradient(circle at 90% 90%, rgba(197, 155, 63, 0.18), transparent 50%),
-      linear-gradient(180deg, #140205 0%, #26050b 50%, #140205 100%);
+      radial-gradient(circle at 50% 15%, rgba(192, 132, 252, 0.22), transparent 60%),
+      radial-gradient(circle at 10% 90%, rgba(144, 97, 249, 0.25), transparent 50%),
+      radial-gradient(circle at 90% 90%, rgba(214, 187, 251, 0.2), transparent 50%),
+      linear-gradient(180deg, #0e0517 0%, #1a0b2e 50%, #0e0517 100%);
     animation: ambientShift 10s ease-in-out infinite alternate;
   }
 
@@ -66,7 +68,7 @@
     pointer-events: none;
   }
 
-  /* Fixed Vector Temple Backdrop with Breathing Glow Animation */
+  /* Fixed Vector Temple Backdrop with Lavender Glow */
   .temple-backdrop {
     position: fixed;
     bottom: 0;
@@ -77,7 +79,7 @@
     max-height: 85vh;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.38;
+    opacity: 0.35;
     filter: drop-shadow(0 0 25px rgba(0,0,0,0.8));
     mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0) 100%);
     -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0) 100%);
@@ -85,8 +87,8 @@
   }
 
   @keyframes templeGlow {
-    0% { opacity: 0.30; transform: translateX(-50%) translateY(0) scale(1); filter: drop-shadow(0 0 15px rgba(250, 217, 128, 0.2)); }
-    100% { opacity: 0.48; transform: translateX(-50%) translateY(-8px) scale(1.01); filter: drop-shadow(0 0 35px rgba(250, 217, 128, 0.45)); }
+    0% { opacity: 0.28; transform: translateX(-50%) translateY(0) scale(1); filter: drop-shadow(0 0 15px rgba(192, 132, 252, 0.25)); }
+    100% { opacity: 0.45; transform: translateX(-50%) translateY(-8px) scale(1.01); filter: drop-shadow(0 0 35px rgba(214, 187, 251, 0.45)); }
   }
 
   .temple-backdrop svg {
@@ -100,8 +102,8 @@
     inset: 0;
     pointer-events: none;
     z-index: 0;
-    opacity: 0.04;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='100' viewBox='0 0 80 100'%3E%3Cpath d='M10 100 V50 Q10 15 40 15 Q70 15 70 50 V100' fill='none' stroke='%23fad980' stroke-width='1.5'/%3E%3Ccircle cx='40' cy='8' r='3' fill='%23fad980'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='100' viewBox='0 0 80 100'%3E%3Cpath d='M10 100 V50 Q10 15 40 15 Q70 15 70 50 V100' fill='none' stroke='%23d6bbfb' stroke-width='1.5'/%3E%3Ccircle cx='40' cy='8' r='3' fill='%23d6bbfb'/%3E%3C/svg%3E");
     background-size: 80px 100px;
   }
 
@@ -117,7 +119,7 @@
     position: relative;
   }
 
-  /* Dividers with Shimmer */
+  /* Dividers with Lavender Shimmer */
   .divider {
     display: flex;
     align-items: center;
@@ -125,12 +127,12 @@
     gap: 16px;
     margin: 28px auto;
     width: min(280px, 75%);
-    color: var(--gold);
+    color: var(--lavender-accent);
   }
   .divider .line {
     flex: 1;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    background: linear-gradient(90deg, transparent, var(--lavender-accent), transparent);
     position: relative;
     overflow: hidden;
   }
@@ -141,7 +143,7 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, var(--gold-bright), transparent);
+    background: linear-gradient(90deg, transparent, var(--lavender-glow), transparent);
     animation: lineGlow 2.5s infinite linear;
   }
   @keyframes lineGlow {
@@ -151,28 +153,28 @@
   .divider .mark {
     font-size: 16px;
     line-height: 1;
-    color: var(--gold-bright);
+    color: var(--amethyst-bright);
     animation: pulseMark 3s infinite ease-in-out;
     display: inline-block;
   }
   @keyframes pulseMark {
-    0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 2px var(--gold)); }
-    50% { transform: scale(1.3) rotate(180deg); filter: drop-shadow(0 0 8px var(--gold-bright)); }
+    0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 2px var(--lavender-accent)); }
+    50% { transform: scale(1.3) rotate(180deg); filter: drop-shadow(0 0 8px var(--amethyst-bright)); }
   }
 
   .eyebrow {
     font-family: 'Cinzel', serif;
     letter-spacing: 0.35em;
     font-size: 11px;
-    color: var(--gold-bright);
+    color: var(--amethyst-bright);
     text-transform: uppercase;
     text-align: center;
     position: relative;
   }
 
-  /* Shimmer Text Effect */
-  .shimmer-gold {
-    background: linear-gradient(120deg, var(--gold) 0%, var(--gold-bright) 30%, var(--gold-light) 50%, var(--gold-bright) 70%, var(--gold) 100%);
+  /* Lavender / Violet Shimmer Text Effect */
+  .shimmer-lavender {
+    background: linear-gradient(120deg, var(--lavender-accent) 0%, var(--lavender-glow) 30%, #ffffff 50%, var(--amethyst-bright) 70%, var(--lavender-accent) 100%);
     background-size: 200% auto;
     color: transparent;
     -webkit-background-clip: text;
@@ -193,7 +195,7 @@
     justify-content: center;
     text-align: center;
     padding: 40px 20px;
-    border-bottom: 1px solid rgba(197, 155, 63, 0.25);
+    border-bottom: 1px solid rgba(183, 148, 244, 0.25);
   }
 
   .hero-inner {
@@ -201,11 +203,11 @@
     padding: 50px 28px;
     max-width: 520px;
     width: 100%;
-    border: 1px solid rgba(197, 155, 63, 0.4);
-    background: rgba(20, 2, 5, 0.82);
-    backdrop-filter: blur(10px);
-    border-radius: 8px;
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.75), 0 0 35px rgba(197, 155, 63, 0.2);
+    border: 1px solid rgba(183, 148, 244, 0.4);
+    background: rgba(14, 5, 23, 0.85);
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 35px rgba(144, 97, 249, 0.25);
     animation: heroFloat 5s ease-in-out infinite alternate, borderPulse 4s ease-in-out infinite alternate;
   }
   @keyframes heroFloat {
@@ -213,8 +215,8 @@
     100% { transform: translateY(-10px); }
   }
   @keyframes borderPulse {
-    0% { border-color: rgba(197, 155, 63, 0.35); box-shadow: 0 20px 45px rgba(0, 0, 0, 0.75), 0 0 20px rgba(197, 155, 63, 0.15); }
-    100% { border-color: rgba(250, 217, 128, 0.7); box-shadow: 0 25px 55px rgba(0, 0, 0, 0.85), 0 0 35px rgba(250, 217, 128, 0.35); }
+    0% { border-color: rgba(183, 148, 244, 0.35); box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 20px rgba(144, 97, 249, 0.2); }
+    100% { border-color: rgba(214, 187, 251, 0.7); box-shadow: 0 25px 55px rgba(0, 0, 0, 0.9), 0 0 35px rgba(192, 132, 252, 0.4); }
   }
 
   /* Corner Accents */
@@ -222,7 +224,7 @@
     position: absolute;
     width: 22px;
     height: 22px;
-    border: 2px solid var(--gold-bright);
+    border: 2px solid var(--amethyst-bright);
     transition: all 0.4s ease;
     animation: cornerPulse 3s infinite alternate ease-in-out;
   }
@@ -231,8 +233,8 @@
   .ca-bl { bottom: -2px; left: -2px; border-right: none; border-top: none; }
   .ca-br { bottom: -2px; right: -2px; border-left: none; border-top: none; }
   @keyframes cornerPulse {
-    0% { width: 18px; height: 18px; border-color: var(--gold); }
-    100% { width: 26px; height: 26px; border-color: var(--gold-bright); filter: drop-shadow(0 0 4px var(--gold-bright)); }
+    0% { width: 18px; height: 18px; border-color: var(--lavender-accent); }
+    100% { width: 26px; height: 26px; border-color: var(--amethyst-bright); filter: drop-shadow(0 0 6px var(--amethyst-bright)); }
   }
 
   /* Lord Ganesha Icon Animation */
@@ -251,7 +253,7 @@
     position: absolute;
     inset: -12px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(250, 217, 128, 0.45), transparent 70%);
+    background: radial-gradient(circle, rgba(192, 132, 252, 0.45), transparent 70%);
     animation: ganeshaHalo 2.5s ease-in-out infinite alternate;
     z-index: -1;
   }
@@ -268,11 +270,11 @@
     width: 100%;
     height: 100%;
     fill: none;
-    stroke: var(--gold-bright);
+    stroke: var(--lavender-glow);
     stroke-width: 1.6;
     stroke-linecap: round;
     stroke-linejoin: round;
-    filter: drop-shadow(0 0 12px rgba(250, 217, 128, 0.7));
+    filter: drop-shadow(0 0 12px rgba(192, 132, 252, 0.8));
   }
 
   .hero h1 {
@@ -287,14 +289,14 @@
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     font-size: 26px;
-    color: var(--rose);
+    color: var(--amethyst-bright);
     margin: -4px 0;
     display: inline-block;
     animation: pulseAmp 2.2s ease-in-out infinite;
   }
   @keyframes pulseAmp {
     0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.85; }
-    50% { transform: scale(1.25) rotate(-5deg); opacity: 1; color: var(--gold-bright); text-shadow: 0 0 10px var(--gold-bright); }
+    50% { transform: scale(1.25) rotate(-5deg); opacity: 1; color: #fff; text-shadow: 0 0 12px var(--amethyst-bright); }
   }
 
   .hero .sub {
@@ -302,7 +304,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 18px;
     letter-spacing: 0.08em;
-    color: var(--ivory);
+    color: var(--lavender-soft);
   }
 
   .scroll-indicator {
@@ -310,14 +312,14 @@
     font-family: 'Cinzel', serif;
     font-size: 10px;
     letter-spacing: 0.25em;
-    color: var(--gold);
+    color: var(--lavender-accent);
     text-transform: uppercase;
     animation: bounce 2s infinite ease-in-out;
   }
 
   @keyframes bounce {
     0%, 100% { transform: translateY(0); opacity: 0.6; }
-    50% { transform: translateY(8px); opacity: 1; color: var(--gold-bright); text-shadow: 0 0 6px var(--gold-bright); }
+    50% { transform: translateY(8px); opacity: 1; color: var(--lavender-glow); text-shadow: 0 0 8px var(--amethyst-bright); }
   }
 
   /* Bride & Groom Image Container */
@@ -337,7 +339,7 @@
     position: absolute;
     inset: 15px 10px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(250, 217, 128, 0.22), transparent 70%);
+    background: radial-gradient(circle, rgba(192, 132, 252, 0.3), transparent 70%);
     animation: auraGlow 3.5s ease-in-out infinite alternate;
     z-index: -1;
   }
@@ -347,7 +349,7 @@
     height: auto;
     display: block;
     object-fit: contain;
-    border-radius: 8px;
+    border-radius: 12px;
     filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.85));
   }
 
@@ -371,7 +373,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     font-size: 21px;
-    color: var(--sandal);
+    color: var(--lavender-soft);
     max-width: 500px;
     margin: 0 auto 24px;
     line-height: 1.8;
@@ -386,7 +388,7 @@
   .invite-block .amp-small {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    color: var(--gold);
+    color: var(--amethyst-bright);
     font-size: 22px;
     margin: 4px 0;
     display: inline-block;
@@ -396,23 +398,23 @@
   .invite-block .closing {
     font-family: 'Cormorant Garamond', serif;
     font-size: 19px;
-    color: var(--sandal);
+    color: var(--lavender-soft);
     max-width: 480px;
     margin: 24px auto 0;
     line-height: 1.8;
   }
 
   .placeholder {
-    color: var(--gold-light);
-    border-bottom: 1px dashed rgba(250, 217, 128, 0.5);
+    color: var(--lavender-glow);
+    border-bottom: 1px dashed rgba(214, 187, 251, 0.6);
     padding: 0 4px;
     font-style: italic;
     transition: all 0.3s;
   }
   .placeholder:hover {
-    border-bottom-color: var(--gold-bright);
+    border-bottom-color: var(--lavender-light);
     color: #fff;
-    text-shadow: 0 0 8px rgba(250, 217, 128, 0.6);
+    text-shadow: 0 0 10px rgba(192, 132, 252, 0.8);
   }
 
   /* Ceremony Card */
@@ -432,33 +434,33 @@
     text-align: center;
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    color: var(--sandal);
+    color: var(--lavender-soft);
     font-size: 17px;
     margin-bottom: 36px;
   }
 
   .event-card {
-    border: 1px solid rgba(197, 155, 63, 0.4);
+    border: 1px solid rgba(183, 148, 244, 0.45);
     padding: 48px 32px;
     text-align: center;
     position: relative;
-    background: linear-gradient(180deg, rgba(38, 5, 11, 0.85), rgba(20, 2, 5, 0.96));
-    backdrop-filter: blur(6px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-    border-radius: 6px;
+    background: linear-gradient(180deg, rgba(34, 14, 61, 0.9), rgba(14, 5, 23, 0.96));
+    backdrop-filter: blur(8px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+    border-radius: 12px;
     transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.4s ease, box-shadow 0.4s ease;
   }
   .event-card:hover {
     transform: translateY(-8px);
-    border-color: rgba(250, 217, 128, 0.85);
-    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.85), 0 0 35px rgba(197, 155, 63, 0.35);
+    border-color: rgba(214, 187, 251, 0.85);
+    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.9), 0 0 35px rgba(192, 132, 252, 0.4);
   }
 
   .event-card .tag {
     font-family: 'Cinzel', serif;
     font-size: 11px;
     letter-spacing: 0.3em;
-    color: var(--gold);
+    color: var(--amethyst-bright);
     text-transform: uppercase;
   }
 
@@ -466,7 +468,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-weight: 600;
     font-size: 36px;
-    color: var(--ivory);
+    color: var(--lavender-light);
     margin: 12px 0 16px;
   }
 
@@ -477,7 +479,7 @@
     flex-wrap: wrap;
     font-family: 'Cormorant Garamond', serif;
     font-size: 19px;
-    color: var(--gold-bright);
+    color: var(--lavender-glow);
     margin-bottom: 18px;
     font-weight: 600;
   }
@@ -486,7 +488,7 @@
     font-family: 'EB Garamond', serif;
     font-style: italic;
     font-size: 16.5px;
-    color: rgba(252, 246, 237, 0.9);
+    color: rgba(247, 242, 255, 0.9);
     max-width: 420px;
     margin: 0 auto;
     line-height: 1.75;
@@ -495,14 +497,14 @@
   .event-card .venue-box {
     margin-top: 28px;
     padding-top: 22px;
-    border-top: 1px solid rgba(197, 155, 63, 0.25);
+    border-top: 1px solid rgba(183, 148, 244, 0.25);
   }
 
   .event-card .venue-title {
     font-family: 'Cinzel', serif;
     font-size: 12px;
     letter-spacing: 0.25em;
-    color: var(--gold-bright);
+    color: var(--amethyst-bright);
     text-transform: uppercase;
     margin-bottom: 6px;
   }
@@ -510,7 +512,7 @@
   .event-card .venue-address {
     font-family: 'Cormorant Garamond', serif;
     font-size: 22px;
-    color: var(--sandal);
+    color: var(--lavender-soft);
     line-height: 1.4;
     font-weight: 600;
     margin-bottom: 14px;
@@ -520,12 +522,12 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 22px;
+    padding: 10px 24px;
     margin-top: 8px;
-    background: rgba(197, 155, 63, 0.15);
-    border: 1px solid var(--gold);
+    background: rgba(144, 97, 249, 0.18);
+    border: 1px solid var(--amethyst-bright);
     border-radius: 30px;
-    color: var(--gold-bright);
+    color: var(--lavender-glow);
     font-family: 'Cinzel', serif;
     font-size: 11px;
     letter-spacing: 0.18em;
@@ -535,9 +537,9 @@
   }
 
   .map-btn:hover {
-    background: var(--gold);
-    color: var(--maroon-deep);
-    box-shadow: 0 0 16px rgba(250, 217, 128, 0.5);
+    background: var(--amethyst-bright);
+    color: var(--violet-deep);
+    box-shadow: 0 0 20px rgba(192, 132, 252, 0.6);
     transform: scale(1.04);
   }
 
@@ -552,7 +554,7 @@
     font-style: italic;
     font-size: 22px;
     line-height: 1.9;
-    color: var(--sandal);
+    color: var(--lavender-soft);
     max-width: 500px;
     margin: 0 auto;
   }
@@ -567,7 +569,7 @@
   footer {
     padding: 40px 0 55px;
     text-align: center;
-    border-top: 1px solid rgba(197, 155, 63, 0.25);
+    border-top: 1px solid rgba(183, 148, 244, 0.25);
   }
 
   footer .monogram {
@@ -579,7 +581,7 @@
     font-family: 'Cinzel', serif;
     font-size: 9.5px;
     letter-spacing: 0.25em;
-    color: rgba(232, 215, 190, 0.65);
+    color: rgba(226, 212, 248, 0.65);
     margin-top: 8px;
     text-transform: uppercase;
   }
@@ -603,11 +605,11 @@
 <div class="temple-arch-pattern"></div>
 <canvas id="fx-canvas"></canvas>
 
-<!-- Vector Background Temple -->
+<!-- Vector Background Temple (Violet & Lavender Palette) -->
 <div class="temple-backdrop">
   <svg viewBox="0 0 800 700" fill="none" xmlns="http://www.w3.org/2000/svg">
     <!-- Kalasams -->
-    <g fill="#c59b3f" stroke="#3b171f" stroke-width="1.5">
+    <g fill="#c084fc" stroke="#1a0b2e" stroke-width="1.5">
       <path d="M360 85 Q360 70 365 70 Q370 70 370 85 Z"/>
       <path d="M375 80 Q375 62 380 62 Q385 62 385 80 Z"/>
       <path d="M395 75 Q395 55 400 55 Q405 55 405 75 Z"/>
@@ -615,65 +617,65 @@
       <path d="M430 85 Q430 70 435 70 Q440 70 440 85 Z"/>
     </g>
     <!-- Gopuram Crown Arch -->
-    <path d="M340 100 Q400 80 460 100 L470 120 L330 120 Z" fill="#4d1f27" stroke="#682c37" stroke-width="2"/>
-    <path d="M350 102 Q400 90 450 102 L445 118 L355 118 Z" fill="#7a3440"/>
+    <path d="M340 100 Q400 80 460 100 L470 120 L330 120 Z" fill="#2d134d" stroke="#482175" stroke-width="2"/>
+    <path d="M350 102 Q400 90 450 102 L445 118 L355 118 Z" fill="#3b1b61"/>
 
     <!-- Tiers -->
-    <path d="M320 120 L480 120 L490 170 L310 170 Z" fill="#3b171f" stroke="#5a232e" stroke-width="2"/>
-    <rect x="335" y="130" width="130" height="35" rx="3" fill="#52202a" stroke="#7a3440"/>
-    <rect x="385" y="135" width="30" height="28" rx="2" fill="#1e070c"/>
-    <circle cx="360" cy="148" r="8" fill="#401720" stroke="#c59b3f" stroke-width="1.5"/>
-    <circle cx="440" cy="148" r="8" fill="#401720" stroke="#c59b3f" stroke-width="1.5"/>
+    <path d="M320 120 L480 120 L490 170 L310 170 Z" fill="#220e3d" stroke="#3e1a6c" stroke-width="2"/>
+    <rect x="335" y="130" width="130" height="35" rx="3" fill="#331559" stroke="#4c2282"/>
+    <rect x="385" y="135" width="30" height="28" rx="2" fill="#120620"/>
+    <circle cx="360" cy="148" r="8" fill="#260f42" stroke="#b794f4" stroke-width="1.5"/>
+    <circle cx="440" cy="148" r="8" fill="#260f42" stroke="#b794f4" stroke-width="1.5"/>
 
-    <path d="M300 170 L500 170 L515 230 L285 230 Z" fill="#441a23" stroke="#5e2631" stroke-width="2"/>
-    <rect x="315" y="180" width="170" height="42" rx="3" fill="#5c242f" stroke="#7a3440"/>
-    <rect x="382" y="188" width="36" height="34" rx="2" fill="#19060a"/>
-    <rect x="340" y="190" width="22" height="28" rx="2" fill="#301118"/>
-    <rect x="438" y="190" width="22" height="28" rx="2" fill="#301118"/>
+    <path d="M300 170 L500 170 L515 230 L285 230 Z" fill="#2a124a" stroke="#461f7a" stroke-width="2"/>
+    <rect x="315" y="180" width="170" height="42" rx="3" fill="#3c1969" stroke="#542b8f"/>
+    <rect x="382" y="188" width="36" height="34" rx="2" fill="#0f051c"/>
+    <rect x="340" y="190" width="22" height="28" rx="2" fill="#1e0c33"/>
+    <rect x="438" y="190" width="22" height="28" rx="2" fill="#1e0c33"/>
 
-    <path d="M275 230 L525 230 L545 300 L255 300 Z" fill="#3b171f" stroke="#5a232e" stroke-width="2"/>
-    <rect x="290" y="242" width="220" height="48" rx="3" fill="#52202a" stroke="#7a3440"/>
-    <rect x="380" y="250" width="40" height="40" rx="3" fill="#140205"/>
-    <rect x="330" y="252" width="28" height="34" rx="2" fill="#2d0f16"/>
-    <rect x="442" y="252" width="28" height="34" rx="2" fill="#2d0f16"/>
+    <path d="M275 230 L525 230 L545 300 L255 300 Z" fill="#220e3d" stroke="#3e1a6c" stroke-width="2"/>
+    <rect x="290" y="242" width="220" height="48" rx="3" fill="#331559" stroke="#4c2282"/>
+    <rect x="380" y="250" width="40" height="40" rx="3" fill="#0b0314"/>
+    <rect x="330" y="252" width="28" height="34" rx="2" fill="#1a0b2e"/>
+    <rect x="442" y="252" width="28" height="34" rx="2" fill="#1a0b2e"/>
 
-    <path d="M245 300 L555 300 L580 380 L220 380 Z" fill="#441a23" stroke="#5e2631" stroke-width="2"/>
-    <rect x="260" y="315" width="280" height="55" rx="4" fill="#5c242f" stroke="#7a3440"/>
-    <rect x="375" y="325" width="50" height="45" rx="3" fill="#140205"/>
-    <rect x="305" y="327" width="35" height="38" rx="2" fill="#2d0f16"/>
-    <rect x="460" y="327" width="35" height="38" rx="2" fill="#2d0f16"/>
+    <path d="M245 300 L555 300 L580 380 L220 380 Z" fill="#2a124a" stroke="#461f7a" stroke-width="2"/>
+    <rect x="260" y="315" width="280" height="55" rx="4" fill="#3c1969" stroke="#542b8f"/>
+    <rect x="375" y="325" width="50" height="45" rx="3" fill="#0b0314"/>
+    <rect x="305" y="327" width="35" height="38" rx="2" fill="#1a0b2e"/>
+    <rect x="460" y="327" width="35" height="38" rx="2" fill="#1a0b2e"/>
 
-    <path d="M210 380 L590 380 L615 470 L185 470 Z" fill="#3b171f" stroke="#5a232e" stroke-width="2"/>
-    <rect x="230" y="395" width="340" height="65" rx="4" fill="#52202a" stroke="#7a3440"/>
-    <rect x="370" y="405" width="60" height="55" rx="4" fill="#140205"/>
-    <rect x="280" y="410" width="45" height="45" rx="3" fill="#2d0f16"/>
-    <rect x="475" y="410" width="45" height="45" rx="3" fill="#2d0f16"/>
+    <path d="M210 380 L590 380 L615 470 L185 470 Z" fill="#220e3d" stroke="#3e1a6c" stroke-width="2"/>
+    <rect x="230" y="395" width="340" height="65" rx="4" fill="#331559" stroke="#4c2282"/>
+    <rect x="370" y="405" width="60" height="55" rx="4" fill="#0b0314"/>
+    <rect x="280" y="410" width="45" height="45" rx="3" fill="#1a0b2e"/>
+    <rect x="475" y="410" width="45" height="45" rx="3" fill="#1a0b2e"/>
 
     <!-- Temple Base -->
-    <path d="M40 470 L760 470 L760 690 L40 690 Z" fill="#4a1c25" stroke="#682c37" stroke-width="3"/>
+    <path d="M40 470 L760 470 L760 690 L40 690 Z" fill="#2f1452" stroke="#482175" stroke-width="3"/>
     
-    <rect x="70" y="510" width="140" height="150" fill="#3b171f" stroke="#5a232e" stroke-width="2"/>
-    <line x1="100" y1="510" x2="100" y2="660" stroke="#702d3a" stroke-width="4"/>
-    <line x1="140" y1="510" x2="140" y2="660" stroke="#702d3a" stroke-width="4"/>
-    <line x1="180" y1="510" x2="180" y2="660" stroke="#702d3a" stroke-width="4"/>
-    <rect x="125" y="540" width="30" height="60" fill="#140205"/>
+    <rect x="70" y="510" width="140" height="150" fill="#220e3d" stroke="#3e1a6c" stroke-width="2"/>
+    <line x1="100" y1="510" x2="100" y2="660" stroke="#482175" stroke-width="4"/>
+    <line x1="140" y1="510" x2="140" y2="660" stroke="#482175" stroke-width="4"/>
+    <line x1="180" y1="510" x2="180" y2="660" stroke="#482175" stroke-width="4"/>
+    <rect x="125" y="540" width="30" height="60" fill="#0b0314"/>
 
-    <rect x="590" y="510" width="140" height="150" fill="#3b171f" stroke="#5a232e" stroke-width="2"/>
-    <line x1="620" y1="510" x2="620" y2="660" stroke="#702d3a" stroke-width="4"/>
-    <line x1="660" y1="510" x2="660" y2="660" stroke="#702d3a" stroke-width="4"/>
-    <line x1="700" y1="510" x2="700" y2="660" stroke="#702d3a" stroke-width="4"/>
-    <rect x="645" y="540" width="30" height="60" fill="#140205"/>
+    <rect x="590" y="510" width="140" height="150" fill="#220e3d" stroke="#3e1a6c" stroke-width="2"/>
+    <line x1="620" y1="510" x2="620" y2="660" stroke="#482175" stroke-width="4"/>
+    <line x1="660" y1="510" x2="660" y2="660" stroke="#482175" stroke-width="4"/>
+    <line x1="700" y1="510" x2="700" y2="660" stroke="#482175" stroke-width="4"/>
+    <rect x="645" y="540" width="30" height="60" fill="#0b0314"/>
 
     <!-- Central Entrance -->
-    <path d="M270 470 L530 470 L530 690 L270 690 Z" fill="#5c242f" stroke="#7a3440" stroke-width="3"/>
-    <path d="M320 530 L480 530 L480 690 L320 690 Z" fill="#140205" stroke="#38131a" stroke-width="3"/>
-    <rect x="335" y="550" width="60" height="140" fill="#240c12" stroke="#5a232e" stroke-width="2"/>
-    <rect x="405" y="550" width="60" height="140" fill="#240c12" stroke="#5a232e" stroke-width="2"/>
+    <path d="M270 470 L530 470 L530 690 L270 690 Z" fill="#3c1969" stroke="#542b8f" stroke-width="3"/>
+    <path d="M320 530 L480 530 L480 690 L320 690 Z" fill="#0b0314" stroke="#250d3f" stroke-width="3"/>
+    <rect x="335" y="550" width="60" height="140" fill="#170929" stroke="#3e1a6c" stroke-width="2"/>
+    <rect x="405" y="550" width="60" height="140" fill="#170929" stroke="#3e1a6c" stroke-width="2"/>
 
-    <!-- Gold Highlights -->
-    <line x1="270" y1="485" x2="530" y2="485" stroke="#c59b3f" stroke-width="2.5"/>
-    <line x1="40" y1="495" x2="760" y2="495" stroke="#c59b3f" stroke-width="2"/>
-    <line x1="40" y1="675" x2="760" y2="675" stroke="#c59b3f" stroke-width="2"/>
+    <!-- Lavender Highlights -->
+    <line x1="270" y1="485" x2="530" y2="485" stroke="#b794f4" stroke-width="2.5"/>
+    <line x1="40" y1="495" x2="760" y2="495" stroke="#b794f4" stroke-width="2"/>
+    <line x1="40" y1="675" x2="760" y2="675" stroke="#b794f4" stroke-width="2"/>
   </svg>
 </div>
 
@@ -709,29 +711,29 @@
     </div>
 
     <div class="eyebrow">Together with our families</div>
-    <h1 class="shimmer-gold">Arundathi</h1>
+    <h1 class="shimmer-lavender">Arundathi</h1>
     <div class="amp">&amp;</div>
-    <h1 class="shimmer-gold">Prabin</h1>
+    <h1 class="shimmer-lavender">Prabin</h1>
     <p class="sub">request the honour of your presence</p>
   </div>
 
   <div class="scroll-indicator">Scroll to view</div>
 </section>
 
-<!-- INVITATION TEXT WITH DIRECT COUPLE IMAGE -->
+<!-- INVITATION TEXT WITH COUPLE IMAGE -->
 <section class="invite-block reveal">
   <div class="frame">
 
     <!-- Couple Image -->
     <div class="couple-image-container" title="Bride &amp; Groom">
-      <img src="couple.png" alt="Bride &amp; Groom">
+      <img src="couple.jpg" alt="Bride &amp; Groom">
     </div>
 
     <p class="lead">With the divine blessings of Lord Ganesha and our beloved elders, we cordially invite you to celebrate the sacred union of our hearts and families.</p>
     <div class="divider"><span class="line"></span><span class="mark">✦</span><span class="line"></span></div>
-    <div class="names shimmer-gold">Arundathi</div>
+    <div class="names shimmer-lavender">Arundathi</div>
     <div class="amp-small">&amp;</div>
-    <div class="names shimmer-gold">Prabin</div>
+    <div class="names shimmer-lavender">Prabin</div>
     <p class="closing">Daughter of <span class="placeholder">[ Parents' Names ]</span><br>&amp;<br>Son of <span class="placeholder">[ Parents' Names ]</span></p>
   </div>
 </section>
@@ -739,7 +741,7 @@
 <!-- WEDDING CEREMONY DETAILS -->
 <section class="events">
   <div class="frame">
-    <h2 class="reveal shimmer-gold">The Holy Matrimony</h2>
+    <h2 class="reveal shimmer-lavender">The Holy Matrimony</h2>
     <p class="events-sub reveal">The sacred vows and auspicious muhurtham</p>
 
     <div class="event-card reveal">
@@ -772,17 +774,17 @@
   <div class="frame">
     <div class="divider"><span class="line"></span><span class="mark">❁</span><span class="line"></span></div>
     <blockquote>"Two souls with but a single thought, two hearts that beat as one. Stepping into a lifetime of shared love, laughter, and companionship."</blockquote>
-    <div class="signoff shimmer-gold">With Love &amp; Respect</div>
+    <div class="signoff shimmer-lavender">With Love &amp; Respect</div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="monogram shimmer-gold">A &amp; P</div>
+  <div class="monogram shimmer-lavender">A &amp; P</div>
   <div class="fine">Arundathi &amp; Prabin &middot; Wedding Invitation</div>
 </footer>
 
-<!-- Canvas Particles and Scroll Reveal Script -->
+<!-- Canvas Particles (Lavender & Soft Violet Floating Petals) -->
 <script>
   (function initParticleCanvas() {
     const canvas = document.getElementById('fx-canvas');
@@ -797,11 +799,12 @@
     window.addEventListener('resize', resize);
     resize();
 
+    // Lavender & Violet floating sparkle/petal color palette
     const colors = [
-      'rgba(250, 217, 128, ',
-      'rgba(197, 155, 63, ',
-      'rgba(255, 242, 200, ',
-      'rgba(168, 88, 100, '
+      'rgba(214, 187, 251, ',
+      'rgba(192, 132, 252, ',
+      'rgba(247, 242, 255, ',
+      'rgba(183, 148, 244, '
     ];
 
     class Particle {
@@ -831,7 +834,7 @@
 
         if (this.fadingIn) {
           this.alpha += this.fadeSpeed;
-          if (this.alpha >= 0.8) this.fadingIn = false;
+          if (this.alpha >= 0.85) this.fadingIn = false;
         } else {
           this.alpha -= this.fadeSpeed;
           if (this.alpha <= 0.05) this.reset();
