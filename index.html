@@ -751,13 +751,34 @@ footer {
 }
 
 /* =========================
-   THANK YOU
+   THANK YOU & MURUGAR
 ========================= */
 
 .thank-you {
   padding: 100px 20px;
 
   text-align: center;
+}
+
+.murugar-container {
+  width: 140px;
+  max-width: 60%;
+  margin: 0 auto 30px;
+}
+
+.murugar-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  opacity: 0.85;
+  filter:
+    sepia(100%)
+    hue-rotate(5deg)
+    saturate(260%)
+    brightness(95%)
+    contrast(115%)
+    drop-shadow(0 0 20px rgba(242, 198, 109, 0.45));
 }
 
 .thank-you-message {
@@ -883,6 +904,10 @@ footer {
 
   .thank-you-message {
     font-size: 22px;
+  }
+
+  .murugar-container {
+    width: 110px;
   }
 
 }
@@ -1163,6 +1188,10 @@ footer {
 </section>
 
 <section class="thank-you reveal">
+
+  <div class="murugar-container">
+    <img src="./murugar.png" alt="Lord Murugan">
+  </div>
 
   <div class="divider">
 
