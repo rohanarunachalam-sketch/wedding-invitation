@@ -44,7 +44,7 @@ body {
 }
 
 /* =========================
-   BACKGROUND
+   BACKGROUND & TEMPLE BACKDROP
 ========================= */
 
 .bg-ambient {
@@ -60,6 +60,31 @@ body {
     linear-gradient(180deg, #21090A 0%, #3A1012 50%, #21090A 100%);
 
   animation: ambientShift 10s ease-in-out infinite alternate;
+}
+
+.bg-temple-backdrop {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.bg-temple-backdrop img {
+  width: min(850px, 90vw);
+  max-height: 90vh;
+  object-fit: contain;
+  opacity: 0.35;
+  filter:
+    sepia(100%)
+    hue-rotate(5deg)
+    saturate(240%)
+    brightness(90%)
+    contrast(120%)
+    drop-shadow(0 0 35px rgba(242, 198, 109, 0.3));
 }
 
 @keyframes ambientShift {
@@ -910,6 +935,11 @@ footer {
     width: 110px;
   }
 
+  .bg-temple-backdrop img {
+    width: 95vw;
+    opacity: 0.28;
+  }
+
 }
 
 </style>
@@ -919,6 +949,10 @@ footer {
 <body>
 
 <div class="bg-ambient"></div>
+
+<div class="bg-temple-backdrop">
+  <img src="./temple.png" alt="Temple Backdrop">
+</div>
 
 <canvas id="fx-canvas"></canvas>
 
