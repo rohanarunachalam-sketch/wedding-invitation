@@ -74,9 +74,10 @@ body {
 }
 
 .bg-temple-backdrop img {
-  width: min(850px, 90vw);
-  max-height: 90vh;
-  object-fit: contain;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center bottom;
   opacity: 0.35;
   filter:
     sepia(100%)
@@ -936,7 +937,6 @@ footer {
   }
 
   .bg-temple-backdrop img {
-    width: 95vw;
     opacity: 0.28;
   }
 
