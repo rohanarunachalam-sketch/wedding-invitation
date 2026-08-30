@@ -116,6 +116,43 @@ footer {
 }
 
 /* =========================
+   MUSIC CONTROL BUTTON
+========================= */
+
+.music-toggle-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-bright);
+  background: rgba(33, 9, 10, 0.85);
+  backdrop-filter: blur(8px);
+  color: var(--gold-bright);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(242, 198, 109, 0.3);
+  transition: all 0.3s ease;
+}
+
+.music-toggle-btn:hover {
+  transform: scale(1.1);
+  background: var(--gold-bright);
+  color: var(--maroon-deep);
+  box-shadow: 0 0 20px rgba(242, 198, 109, 0.6);
+}
+
+.music-toggle-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/* =========================
    DIVIDER
 ========================= */
 
@@ -948,6 +985,17 @@ footer {
 
 <body>
 
+<audio id="bg-music" src="./song.mp3" loop preload="auto"></audio>
+
+<button id="music-toggle" class="music-toggle-btn" aria-label="Toggle Music" title="Play / Pause Music">
+  <svg id="music-icon-play" viewBox="0 0 24 24">
+    <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+  </svg>
+  <svg id="music-icon-pause" viewBox="0 0 24 24" style="display: none;">
+    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+  </svg>
+</button>
+
 <div class="bg-ambient"></div>
 
 <div class="bg-temple-backdrop">
@@ -1263,6 +1311,56 @@ footer {
 </footer>
 
 <script>
+
+/* =========================
+   AUDIO & AUTOPLAY HANDLER
+========================= */
+
+const bgMusic = document.getElementById("bg-music");
+const musicToggleBtn = document.getElementById("music-toggle");
+const musicIconPlay = document.getElementById("music-icon-play");
+const musicIconPause = document.getElementById("music-icon-pause");
+
+function updateMusicIcons(isPlaying) {
+  if (isPlaying) {
+    musicIconPlay.style.display = "none";
+    musicIconPause.style.display = "block";
+  } else {
+    musicIconPlay.style.display = "block";
+    musicIconPause.style.display = "none";
+  }
+}
+
+function tryPlayMusic() {
+  bgMusic.play().then(() => {
+    updateMusicIcons(true);
+    document.removeEventListener("click", tryPlayMusic);
+    document.removeEventListener("touchstart", tryPlayMusic);
+    document.removeEventListener("scroll", tryPlayMusic);
+  }).catch(() => {
+    updateMusicIcons(false);
+  });
+}
+
+// Handle first user interaction to bypass autoplay restrictions
+document.addEventListener("DOMContentLoaded", () => {
+  tryPlayMusic();
+  document.addEventListener("click", tryPlayMusic, { once: true });
+  document.addEventListener("touchstart", tryPlayMusic, { once: true });
+  document.addEventListener("scroll", tryPlayMusic, { once: true });
+});
+
+musicToggleBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  if (bgMusic.paused) {
+    bgMusic.play();
+    updateMusicIcons(true);
+  } else {
+    bgMusic.pause();
+    updateMusicIcons(false);
+  }
+});
+
 
 /* =========================
    COUNTDOWN
