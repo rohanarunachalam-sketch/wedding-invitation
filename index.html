@@ -74,11 +74,10 @@ body {
 }
 
 .bg-temple-backdrop img {
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  object-position: center bottom;
-  opacity: 0.35;
+  width: min(850px, 90vw);
+  max-height: 90vh;
+  object-fit: contain;
+  opacity: 0.12;
   filter:
     sepia(100%)
     hue-rotate(5deg)
@@ -937,7 +936,8 @@ footer {
   }
 
   .bg-temple-backdrop img {
-    opacity: 0.28;
+    width: 95vw;
+    opacity: 0.10;
   }
 
 }
@@ -951,7 +951,7 @@ footer {
 <div class="bg-ambient"></div>
 
 <div class="bg-temple-backdrop">
-  <img src="./temple.png" alt="Temple Backdrop">
+  <img src="./avi4duyze.webp" alt="Temple Backdrop">
 </div>
 
 <canvas id="fx-canvas"></canvas>
