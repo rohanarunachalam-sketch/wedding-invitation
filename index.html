@@ -119,37 +119,48 @@ footer {
    MUSIC CONTROL BUTTON
 ========================= */
 
-.music-toggle-btn {
+.music-control-btn {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  z-index: 999;
-  width: 46px;
-  height: 46px;
+  z-index: 9999;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   border: 1px solid var(--gold-bright);
-  background: rgba(33, 9, 10, 0.85);
-  backdrop-filter: blur(8px);
+  background: rgba(33, 9, 10, 0.88);
+  backdrop-filter: blur(10px);
   color: var(--gold-bright);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(242, 198, 109, 0.3);
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.7),
+    0 0 15px rgba(242, 198, 109, 0.35);
   transition: all 0.3s ease;
 }
 
-.music-toggle-btn:hover {
-  transform: scale(1.1);
+.music-control-btn:hover {
   background: var(--gold-bright);
   color: var(--maroon-deep);
-  box-shadow: 0 0 20px rgba(242, 198, 109, 0.6);
+  transform: scale(1.08);
+  box-shadow: 0 0 25px rgba(242, 198, 109, 0.75);
 }
 
-.music-toggle-btn svg {
-  width: 20px;
-  height: 20px;
+.music-control-btn svg {
+  width: 22px;
+  height: 22px;
   fill: currentColor;
+}
+
+.music-control-btn.playing svg {
+  animation: rotateMusic 4s linear infinite;
+}
+
+@keyframes rotateMusic {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* =========================
@@ -985,14 +996,13 @@ footer {
 
 <body>
 
+<!-- Background Audio -->
 <audio id="bg-music" src="./song.mp3" loop preload="auto"></audio>
 
-<button id="music-toggle" class="music-toggle-btn" aria-label="Toggle Music" title="Play / Pause Music">
-  <svg id="music-icon-play" viewBox="0 0 24 24">
+<!-- Audio Play/Pause Button (Symbol Only) -->
+<button id="music-toggle" class="music-control-btn playing" aria-label="Toggle Background Music" title="Play / Pause Music">
+  <svg viewBox="0 0 24 24">
     <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-  </svg>
-  <svg id="music-icon-pause" viewBox="0 0 24 24" style="display: none;">
-    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
   </svg>
 </button>
 
@@ -1313,51 +1323,62 @@ footer {
 <script>
 
 /* =========================
-   AUDIO & AUTOPLAY HANDLER
+   AUTOPLAY & MUSIC CONTROLLER
 ========================= */
 
-const bgMusic = document.getElementById("bg-music");
-const musicToggleBtn = document.getElementById("music-toggle");
-const musicIconPlay = document.getElementById("music-icon-play");
-const musicIconPause = document.getElementById("music-icon-pause");
+const music = document.getElementById("bg-music");
+const musicBtn = document.getElementById("music-toggle");
 
-function updateMusicIcons(isPlaying) {
+let userManuallyPaused = false;
+
+function setMusicUI(isPlaying) {
   if (isPlaying) {
-    musicIconPlay.style.display = "none";
-    musicIconPause.style.display = "block";
+    musicBtn.classList.add("playing");
   } else {
-    musicIconPlay.style.display = "block";
-    musicIconPause.style.display = "none";
+    musicBtn.classList.remove("playing");
   }
 }
 
-function tryPlayMusic() {
-  bgMusic.play().then(() => {
-    updateMusicIcons(true);
-    document.removeEventListener("click", tryPlayMusic);
-    document.removeEventListener("touchstart", tryPlayMusic);
-    document.removeEventListener("scroll", tryPlayMusic);
+function startAudio() {
+  if (userManuallyPaused) return;
+
+  music.play().then(() => {
+    setMusicUI(true);
+    removeInteractionListeners();
   }).catch(() => {
-    updateMusicIcons(false);
+    setMusicUI(false);
   });
 }
 
-// Handle first user interaction to bypass autoplay restrictions
-document.addEventListener("DOMContentLoaded", () => {
-  tryPlayMusic();
-  document.addEventListener("click", tryPlayMusic, { once: true });
-  document.addEventListener("touchstart", tryPlayMusic, { once: true });
-  document.addEventListener("scroll", tryPlayMusic, { once: true });
-});
+function removeInteractionListeners() {
+  document.removeEventListener("click", startAudio);
+  document.removeEventListener("touchstart", startAudio);
+  document.removeEventListener("scroll", startAudio);
+  document.removeEventListener("keydown", startAudio);
+}
 
-musicToggleBtn.addEventListener("click", (e) => {
+// 1. Attempt immediate playback on load
+window.addEventListener("load", startAudio);
+document.addEventListener("DOMContentLoaded", startAudio);
+
+// 2. Fallback for browser autoplay policies (starts on first tap/touch/scroll)
+document.addEventListener("click", startAudio, { once: true });
+document.addEventListener("touchstart", startAudio, { once: true });
+document.addEventListener("scroll", startAudio, { once: true });
+document.addEventListener("keydown", startAudio, { once: true });
+
+// 3. User control to pause/resume anytime
+musicBtn.addEventListener("click", (e) => {
   e.stopPropagation();
-  if (bgMusic.paused) {
-    bgMusic.play();
-    updateMusicIcons(true);
+  if (!music.paused) {
+    music.pause();
+    userManuallyPaused = true;
+    setMusicUI(false);
   } else {
-    bgMusic.pause();
-    updateMusicIcons(false);
+    userManuallyPaused = false;
+    music.play().then(() => {
+      setMusicUI(true);
+    });
   }
 });
 
