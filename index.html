@@ -116,7 +116,7 @@ body {
 }
 
 /* =========================
-   BACKGROUND & TEMPLE BACKDROP
+   BACKGROUNDS & MULTI-IMAGE BACKDROP
 ========================= */
 
 .bg-ambient {
@@ -134,7 +134,7 @@ body {
   animation: ambientShift 10s ease-in-out infinite alternate;
 }
 
-.bg-temple-backdrop {
+.bg-art-backdrop {
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -145,11 +145,14 @@ body {
   overflow: hidden;
 }
 
-.bg-temple-backdrop img {
+.bg-art-backdrop img {
+  position: absolute;
   width: min(850px, 90vw);
   max-height: 90vh;
   object-fit: contain;
-  opacity: 0.35;
+  opacity: 0;
+  transform: translateY(160px) scale(0.88);
+  will-change: transform, opacity;
   filter:
     sepia(100%)
     hue-rotate(5deg)
@@ -301,7 +304,7 @@ footer {
 }
 
 /* =========================
-   HERO
+   HERO (PAGE 1)
 ========================= */
 
 .hero {
@@ -316,26 +319,17 @@ footer {
 
 .hero-inner {
   position: relative;
-
   padding: 50px 28px;
-
   max-width: 520px;
   width: 100%;
-
   border: 1px solid rgba(201,154,61,.45);
-
   background: rgba(33,9,10,.72);
-
   backdrop-filter: blur(12px);
-
   border-radius: 12px;
-
   box-shadow:
     0 20px 45px rgba(0,0,0,.85),
     0 0 35px rgba(169,104,40,.28);
-
-  animation:
-    heroFloat 5s ease-in-out infinite alternate;
+  animation: heroFloat 5s ease-in-out infinite alternate;
 }
 
 @keyframes heroFloat {
@@ -355,12 +349,9 @@ footer {
 .ganesha-container svg {
   width: 100%;
   height: 100%;
-
   fill: none;
   stroke: var(--gold-bright);
-
   stroke-width: 1.6;
-
   filter:
     drop-shadow(
       0 0 12px rgba(242,198,109,.8)
@@ -369,60 +360,40 @@ footer {
 
 .eyebrow {
   font-family: 'Cinzel', serif;
-
   letter-spacing: .35em;
   font-size: 11px;
-
   color: var(--gold-bright);
-
   text-transform: uppercase;
 }
 
 .hero h1 {
   font-family: 'Tangerine', cursive;
-
-  font-size:
-    clamp(68px,14vw,104px);
-
+  font-size: clamp(68px,14vw,104px);
   line-height: .95;
-
   margin: 6px 0;
 }
 
 .hero .amp {
   font-family: 'Cormorant Garamond', serif;
-
   font-style: italic;
-
   font-size: 26px;
-
   color: var(--gold-bright);
 }
 
 .hero .sub {
   margin-top: 18px;
-
-  font-family:
-    'Cormorant Garamond', serif;
-
+  font-family: 'Cormorant Garamond', serif;
   font-size: 18px;
-
   letter-spacing: .08em;
-
   color: var(--cream-soft);
 }
 
 .scroll-indicator {
   margin-top: 32px;
-
   font-family: 'Cinzel', serif;
-
   font-size: 10px;
-
   letter-spacing: .25em;
-
   color: var(--gold-antique);
-
   animation: bounce 2s infinite;
 }
 
@@ -434,24 +405,17 @@ footer {
 }
 
 /* =========================
-   INVITATION WITH PILLARS
+   INVITATION WITH PILLARS (PAGE 2)
 ========================= */
 
 .invite-block {
   position: relative;
-
   min-height: 100vh;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   padding: 80px 0;
-
   text-align: center;
-
   overflow: hidden;
 }
 
@@ -459,26 +423,18 @@ footer {
 
 .pillar-side-drawing {
   position: absolute;
-
   top: 0;
   bottom: 0;
-
-  width:
-    clamp(70px,12vw,160px);
-
+  width: clamp(70px,12vw,160px);
   pointer-events: none;
-
   z-index: 2;
 }
 
 .pillar-side-drawing img {
   width: 100%;
   height: 100%;
-
   object-fit: fill;
-
   opacity: 0.45;
-
   filter:
     sepia(100%)
     hue-rotate(5deg)
@@ -505,19 +461,14 @@ footer {
 .couple-image-container {
   width: 210px;
   max-width: 85%;
-
   margin: 0 auto 16px;
-
-  animation:
-    coupleFloat 4.5s ease-in-out infinite alternate;
+  animation: coupleFloat 4.5s ease-in-out infinite alternate;
 }
 
 .couple-image-container img {
   width: 100%;
   display: block;
-
   border-radius: 12px;
-
   filter:
     drop-shadow(
       0 10px 24px
@@ -534,118 +485,83 @@ footer {
 }
 
 .lead {
-  font-family:
-    'Cormorant Garamond', serif;
-
+  font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-
   font-size: 21px;
-
   color: var(--cream-soft);
-
   line-height: 1.8;
-
   margin-bottom: 24px;
 }
 
 .names {
-  font-family:
-    'Tangerine', cursive;
-
+  font-family: 'Tangerine', cursive;
   font-size: 70px;
 }
 
 .amp-small {
-  font-family:
-    'Cormorant Garamond', serif;
-
+  font-family: 'Cormorant Garamond', serif;
   font-size: 22px;
-
   color: var(--gold-bright);
 }
 
 .closing {
   margin-top: 24px;
-
-  font-family:
-    'Cormorant Garamond', serif;
-
+  font-family: 'Cormorant Garamond', serif;
   font-size: 19px;
-
   line-height: 1.8;
-
   color: var(--cream-soft);
 }
 
 /* =========================
-   COUNTDOWN
+   COUNTDOWN (PAGE 3 - HAVAN KUND)
 ========================= */
 
 .countdown-section {
+  position: relative;
   padding: 80px 20px;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
 .countdown-title {
   font-family: 'Cinzel', serif;
-
   font-size: 22px;
-
   letter-spacing: .15em;
-
   margin-bottom: 35px;
 }
 
 .countdown {
   display: flex;
-
   justify-content: center;
-
   gap: 12px;
-
   flex-wrap: wrap;
 }
 
 .time-box {
   min-width: 75px;
-
   padding: 18px 12px;
-
-  border:
-    1px solid
-    rgba(201,154,61,.45);
-
+  border: 1px solid rgba(201,154,61,.45);
   border-radius: 10px;
-
-  background:
-    rgba(58,16,18,.75);
-
-  backdrop-filter:
-    blur(8px);
+  background: rgba(58,16,18,.75);
+  backdrop-filter: blur(8px);
 }
 
 .time-number {
-  font-family:
-    'Cinzel', serif;
-
+  font-family: 'Cinzel', serif;
   font-size: 28px;
-
-  color:
-    var(--gold-light);
+  color: var(--gold-light);
 }
 
 .time-label {
-  font-family:
-    'Cinzel', serif;
-
+  font-family: 'Cinzel', serif;
   font-size: 8px;
-
   letter-spacing: .15em;
-
   margin-top: 7px;
-
-  color:
-    var(--gold-bright);
+  color: var(--gold-bright);
 }
 
 /* =========================
@@ -657,63 +573,41 @@ footer {
 }
 
 .events h2 {
-  font-family:
-    'Cinzel', serif;
-
+  font-family: 'Cinzel', serif;
   text-align: center;
-
   font-size: 28px;
-
   letter-spacing: .12em;
 }
 
 .events-sub {
   text-align: center;
-
   margin: 12px 0 45px;
-
-  font-family:
-    'Cormorant Garamond', serif;
-
+  font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-
-  color:
-    var(--cream-soft);
-
+  color: var(--cream-soft);
   font-size: 18px;
 }
 
 .journey-card {
   padding: 45px 28px;
-
   text-align: center;
-
   border-radius: 14px;
-
-  border:
-    1px solid
-    rgba(201,154,61,.45);
-
+  border: 1px solid rgba(201,154,61,.45);
   background:
     linear-gradient(
       180deg,
       rgba(74,23,24,.90),
       rgba(33,9,10,.95)
     );
-
   box-shadow:
     0 15px 40px
     rgba(0,0,0,.75);
-
-  backdrop-filter:
-    blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .journey-icon {
   font-size: 38px;
-
   margin-bottom: 15px;
-
   filter:
     drop-shadow(
       0 0 10px
@@ -722,99 +616,68 @@ footer {
 }
 
 .journey-tag {
-  font-family:
-    'Cinzel', serif;
-
+  font-family: 'Cinzel', serif;
   font-size: 10px;
-
   letter-spacing: .28em;
-
-  color:
-    var(--gold-bright);
-
+  color: var(--gold-bright);
   margin-bottom: 15px;
 }
 
 .journey-card h3 {
-  font-family:
-    'Cormorant Garamond', serif;
-
+  font-family: 'Cormorant Garamond', serif;
   font-size: 38px;
-
   margin-bottom: 18px;
 }
 
 .event-date {
   margin: 20px 0;
-
-  font-family:
-    'Cormorant Garamond', serif;
+  font-family: 'Cormorant Garamond', serif;
 }
 
 .event-day {
   font-size: 16px;
-
   letter-spacing: .15em;
-
-  color:
-    var(--gold-antique);
+  color: var(--gold-antique);
 }
 
 .event-main-date {
-  font-family:
-    'Cinzel', serif;
-
+  font-family: 'Cinzel', serif;
   font-size: 24px;
-
   margin: 8px 0;
 }
 
 .event-time {
   font-size: 19px;
-
-  color:
-    var(--gold-light);
+  color: var(--gold-light);
 }
 
 .journey-description {
   font-size: 18px;
-
   line-height: 1.7;
-
-  color:
-    var(--cream-soft);
+  color: var(--cream-soft);
 }
 
 /* CONNECTING JOURNEY */
 
 .journey-connector {
   height: 130px;
-
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
-
   justify-content: center;
-
   gap: 12px;
 }
 
 .connector-line {
   width: 2px;
   height: 65px;
-
   background:
     linear-gradient(
       to bottom,
       transparent,
       var(--gold-bright)
     );
-
-  animation:
-    journeyGlow
-    2s infinite alternate;
+  animation: journeyGlow 2s infinite alternate;
 }
 
 @keyframes journeyGlow {
@@ -827,18 +690,13 @@ footer {
 
 .connector-arrow {
   font-size: 24px;
-
-  color:
-    var(--gold-light);
-
-  animation:
-    arrowMove 1.8s infinite;
+  color: var(--gold-light);
+  animation: arrowMove 1.8s infinite;
 }
 
 @keyframes arrowMove {
   50% {
-    transform:
-      translateY(8px);
+    transform: translateY(8px);
   }
 }
 
@@ -846,62 +704,41 @@ footer {
 
 .map-btn {
   display: inline-flex;
-
   align-items: center;
-
   justify-content: center;
-
   margin-top: 28px;
-
   padding: 12px 24px;
-
   border-radius: 30px;
-
-  border:
-    1px solid
-    var(--gold-bright);
-
-  background:
-    rgba(201,154,61,.18);
-
-  color:
-    var(--gold-light);
-
-  font-family:
-    'Cinzel', serif;
-
+  border: 1px solid var(--gold-bright);
+  background: rgba(201,154,61,.18);
+  color: var(--gold-light);
+  font-family: 'Cinzel', serif;
   font-size: 10px;
-
   letter-spacing: .15em;
-
   text-decoration: none;
-
-  transition:
-    all .3s ease;
+  transition: all .3s ease;
 }
 
 .map-btn:hover {
-  background:
-    var(--gold-bright);
-
-  color:
-    var(--maroon-deep);
-
-  transform:
-    scale(1.05);
-
+  background: var(--gold-bright);
+  color: var(--maroon-deep);
+  transform: scale(1.05);
   box-shadow:
     0 0 20px
     rgba(242,198,109,.7);
 }
 
 /* =========================
-   THANK YOU & MURUGAR
+   THANK YOU (LAST PAGE - PURNA KALASHA)
 ========================= */
 
 .thank-you {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 100px 20px;
-
   text-align: center;
 }
 
@@ -928,28 +765,17 @@ footer {
 
 .thank-you-message {
   max-width: 550px;
-
   margin: auto;
-
-  font-family:
-    'Cormorant Garamond', serif;
-
+  font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-
   font-size: 26px;
-
   line-height: 1.7;
-
-  color:
-    var(--cream-soft);
+  color: var(--cream-soft);
 }
 
 .thank-you-names {
   margin-top: 30px;
-
-  font-family:
-    'Tangerine', cursive;
-
+  font-family: 'Tangerine', cursive;
   font-size: 65px;
 }
 
@@ -959,18 +785,14 @@ footer {
 
 footer {
   padding: 40px 20px 55px;
-
   text-align: center;
-
   border-top:
     1px solid
     rgba(201,154,61,.3);
 }
 
 .monogram {
-  font-family:
-    'Tangerine', cursive;
-
+  font-family: 'Tangerine', cursive;
   font-size: 45px;
 }
 
@@ -980,11 +802,9 @@ footer {
 
 .reveal {
   opacity: 0;
-
   transform:
     translateY(40px)
     scale(.97);
-
   transition:
     opacity 1s ease,
     transform 1s ease;
@@ -992,7 +812,6 @@ footer {
 
 .reveal.active {
   opacity: 1;
-
   transform:
     translateY(0)
     scale(1);
@@ -1013,8 +832,7 @@ footer {
   }
 
   .frame {
-    padding:
-      0 48px;
+    padding: 0 48px;
   }
 
   .hero h1 {
@@ -1022,8 +840,7 @@ footer {
   }
 
   .hero-inner {
-    padding:
-      42px 20px;
+    padding: 42px 20px;
   }
 
   .names {
@@ -1035,8 +852,7 @@ footer {
   }
 
   .journey-card {
-    padding:
-      38px 20px;
+    padding: 38px 20px;
   }
 
   .journey-card h3 {
@@ -1055,9 +871,8 @@ footer {
     width: 110px;
   }
 
-  .bg-temple-backdrop img {
+  .bg-art-backdrop img {
     width: 95vw;
-    opacity: 0.28;
   }
 
 }
@@ -1068,7 +883,7 @@ footer {
 
 <body>
 
-<!-- Tap to Open Gate Overlay (Bypasses Browser Audio Restrictions) -->
+<!-- Tap to Open Gate Overlay -->
 <div id="invite-gate">
   <div class="gate-card">
     <h2 class="shimmer-lavender">Arundathi & Prabin</h2>
@@ -1091,50 +906,36 @@ footer {
 
 <div class="bg-ambient"></div>
 
-<div class="bg-temple-backdrop">
-  <img src="./temple.png" alt="Temple Backdrop">
+<!-- Background Elements for Sections -->
+<div class="bg-art-backdrop">
+  <!-- Page 2 (Invitation): Temple -->
+  <img id="temple-img" src="./temple.png" alt="Temple Backdrop">
+  <!-- Page 3 (Countdown): Havan Kund -->
+  <img id="havan-img" src="./havan%20kund.png" alt="Havan Kund Backdrop">
+  <!-- Last Page (Thank You): Purna Kalasha -->
+  <img id="kalasha-img" src="./Purna%20Kalasha.png" alt="Purna Kalasha Backdrop">
 </div>
 
 <canvas id="fx-canvas"></canvas>
 
-<section class="hero">
+<!-- 1ST PAGE (Hero) -->
+<section class="hero" id="page-hero">
 
   <div class="hero-inner">
 
     <div class="ganesha-container">
-
       <svg viewBox="0 0 100 100">
-
         <path d="M42 16 L50 6 L58 16 L54 26 L46 26 Z"/>
         <path d="M50 6 L50 26"/>
-
-        <circle
-          cx="50"
-          cy="12"
-          r="1.5"
-          fill="currentColor"
-        />
-
+        <circle cx="50" cy="12" r="1.5" fill="currentColor"/>
         <path d="M36 28 C26 28 20 36 22 48 C24 56 32 58 37 54"/>
         <path d="M64 28 C74 28 80 36 78 48 C76 56 68 58 63 54"/>
-
         <path d="M44 26 Q50 32 56 26"/>
-
         <path d="M50 28 L50 42"/>
-
         <path d="M44 42 Q42 62 55 68 Q64 72 63 80 Q62 86 52 87 Q43 87 42 79"/>
-
-        <circle
-          cx="39"
-          cy="78"
-          r="2.5"
-          fill="currentColor"
-        />
-
+        <circle cx="39" cy="78" r="2.5" fill="currentColor"/>
         <path d="M32 92 Q50 97 68 92"/>
-
       </svg>
-
     </div>
 
     <div class="eyebrow">
@@ -1165,7 +966,8 @@ footer {
 
 </section>
 
-<section class="invite-block reveal">
+<!-- 2ND PAGE (Invitation With Temple Reveal) -->
+<section class="invite-block reveal" id="page-invite">
 
   <div class="pillar-side-drawing left-side">
     <img src="./pillar.png" alt="">
@@ -1192,13 +994,9 @@ footer {
     </p>
 
     <div class="divider">
-
       <span class="line"></span>
-
       <span class="mark">✦</span>
-
       <span class="line"></span>
-
     </div>
 
     <div class="names shimmer-lavender">
@@ -1213,11 +1011,16 @@ footer {
       Prabin
     </div>
 
+    <p class="closing">
+      Please join us in celebrating our special day.
+    </p>
+
   </div>
 
 </section>
 
-<section class="countdown-section reveal">
+<!-- 3RD PAGE (Countdown With Havan Kund Reveal) -->
+<section class="countdown-section reveal" id="page-countdown">
 
   <div class="countdown-title shimmer-lavender">
     THE COUNTDOWN BEGINS
@@ -1249,7 +1052,7 @@ footer {
 
 </section>
 
-<section class="events">
+<section class="events" id="page-events">
 
   <div class="frame">
 
@@ -1260,7 +1063,6 @@ footer {
     <p class="events-sub reveal">
       One sacred beginning, followed by a celebration of love and memories
     </p>
-
 
     <div class="journey-card reveal">
 
@@ -1310,19 +1112,11 @@ footer {
 
     </div>
 
-
     <div class="journey-connector reveal">
-
       <div class="connector-line"></div>
-
-      <div class="connector-arrow">
-        ↓
-      </div>
-
+      <div class="connector-arrow">↓</div>
       <div class="connector-line"></div>
-
     </div>
-
 
     <div class="journey-card reveal">
 
@@ -1362,48 +1156,90 @@ footer {
 
 </section>
 
-<section class="thank-you reveal">
+<!-- LAST PAGE (Thank You With Purna Kalasha Reveal) -->
+<section class="thank-you reveal" id="page-thankyou">
 
   <div class="murugar-container">
     <img src="./murugar.png" alt="Lord Murugan">
   </div>
 
   <div class="divider">
-
     <span class="line"></span>
-
     <span class="mark">❁</span>
-
     <span class="line"></span>
-
   </div>
 
   <p class="thank-you-message">
-
     Your presence, your blessings,
     and your love are the greatest gifts
     you can bring as we begin
     this beautiful new chapter together.
-
   </p>
 
   <div class="thank-you-names shimmer-lavender">
-
     Arundathi & Prabin
-
   </div>
 
 </section>
 
 <footer>
-
   <div class="monogram shimmer-lavender">
     A & P
   </div>
-
 </footer>
 
 <script>
+
+/* =========================
+   DYNAMIC SECTION SCROLL ART REVEAL
+========================= */
+
+const templeImg = document.getElementById("temple-img");
+const havanImg = document.getElementById("havan-img");
+const kalashaImg = document.getElementById("kalasha-img");
+
+const pageHero = document.getElementById("page-hero");
+const pageInvite = document.getElementById("page-invite");
+const pageCountdown = document.getElementById("page-countdown");
+const pageThankyou = document.getElementById("page-thankyou");
+
+function computeSectionProgress(element) {
+  if (!element) return 0;
+  const rect = element.getBoundingClientRect();
+  const vh = window.innerHeight;
+  // Progress goes from 0 (approaching from bottom) to 1 (centered/passed)
+  const progress = (vh - rect.top) / (vh * 0.95);
+  return Math.min(Math.max(progress, 0), 1);
+}
+
+function applyArtTransform(img, progress, maxOpacity = 0.32) {
+  if (!img) return;
+  const opacity = (progress * maxOpacity).toFixed(3);
+  const translateY = (160 - (progress * 160)).toFixed(1);
+  const scale = (0.88 + (progress * 0.12)).toFixed(3);
+  
+  img.style.opacity = opacity;
+  img.style.transform = `translateY(${translateY}px) scale(${scale})`;
+}
+
+function handleScrollBackdrops() {
+  const inviteProgress = computeSectionProgress(pageInvite);
+  const countdownProgress = computeSectionProgress(pageCountdown);
+  const thankyouProgress = computeSectionProgress(pageThankyou);
+
+  // Crossfade out previous artwork as the next one rises
+  const templeActiveProgress = Math.max(0, inviteProgress - countdownProgress);
+  const havanActiveProgress = Math.max(0, countdownProgress - (computeSectionProgress(document.getElementById("page-events"))));
+  const kalashaActiveProgress = thankyouProgress;
+
+  applyArtTransform(templeImg, templeActiveProgress, 0.35);
+  applyArtTransform(havanImg, havanActiveProgress, 0.32);
+  applyArtTransform(kalashaImg, kalashaActiveProgress, 0.35);
+}
+
+window.addEventListener("scroll", handleScrollBackdrops, { passive: true });
+window.addEventListener("resize", handleScrollBackdrops);
+handleScrollBackdrops();
 
 /* =========================
    MUSIC & GATE CONTROLLER
@@ -1432,11 +1268,9 @@ function unlockAndPlay() {
   });
 }
 
-// User taps "Open Invitation" to enter & trigger song
 gateBtn.addEventListener("click", unlockAndPlay);
 inviteGate.addEventListener("click", unlockAndPlay);
 
-// User control button to pause / resume anytime
 musicBtn.addEventListener("click", (e) => {
   e.stopPropagation();
   if (!music.paused) {
@@ -1449,291 +1283,128 @@ musicBtn.addEventListener("click", (e) => {
   }
 });
 
-
 /* =========================
    COUNTDOWN
 ========================= */
 
-const weddingDate =
-  new Date("December 14, 2026 07:00:00").getTime();
+const weddingDate = new Date("December 14, 2026 07:00:00").getTime();
 
 function updateCountdown() {
-
   const now = new Date().getTime();
-
-  const distance =
-    weddingDate - now;
+  const distance = weddingDate - now;
 
   if (distance <= 0) {
-
     document.getElementById("days").innerHTML = "00";
     document.getElementById("hours").innerHTML = "00";
     document.getElementById("minutes").innerHTML = "00";
     document.getElementById("seconds").innerHTML = "00";
-
     return;
   }
 
-  const days =
-    Math.floor(
-      distance / (1000 * 60 * 60 * 24)
-    );
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-  const hours =
-    Math.floor(
-      (distance %
-      (1000 * 60 * 60 * 24))
-      /
-      (1000 * 60 * 60)
-    );
-
-  const minutes =
-    Math.floor(
-      (distance %
-      (1000 * 60 * 60))
-      /
-      (1000 * 60)
-    );
-
-  const seconds =
-    Math.floor(
-      (distance %
-      (1000 * 60))
-      /
-      1000
-    );
-
-  document.getElementById("days").innerHTML =
-    String(days).padStart(2,"0");
-
-  document.getElementById("hours").innerHTML =
-    String(hours).padStart(2,"0");
-
-  document.getElementById("minutes").innerHTML =
-    String(minutes).padStart(2,"0");
-
-  document.getElementById("seconds").innerHTML =
-    String(seconds).padStart(2,"0");
-
+  document.getElementById("days").innerHTML = String(days).padStart(2, "0");
+  document.getElementById("hours").innerHTML = String(hours).padStart(2, "0");
+  document.getElementById("minutes").innerHTML = String(minutes).padStart(2, "0");
+  document.getElementById("seconds").innerHTML = String(seconds).padStart(2, "0");
 }
 
 updateCountdown();
-
-setInterval(
-  updateCountdown,
-  1000
-);
-
+setInterval(updateCountdown, 1000);
 
 /* =========================
    SCROLL REVEAL
 ========================= */
 
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-    const reveals =
-      document.querySelectorAll(".reveal");
-
-    const observer =
-      new IntersectionObserver(
-        entries => {
-
-          entries.forEach(
-            entry => {
-
-              if (
-                entry.isIntersecting
-              ) {
-
-                entry.target.classList.add(
-                  "active"
-                );
-
-                observer.unobserve(
-                  entry.target
-                );
-
-              }
-
-            }
-          );
-
-        },
-        {
-          threshold: .12,
-          rootMargin:
-            "0px 0px -40px 0px"
+document.addEventListener("DOMContentLoaded", () => {
+  const reveals = document.querySelectorAll(".reveal");
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+          observer.unobserve(entry.target);
         }
-      );
+      });
+    },
+    {
+      threshold: .12,
+      rootMargin: "0px 0px -40px 0px"
+    }
+  );
 
-    reveals.forEach(
-      element =>
-        observer.observe(element)
-    );
-
-  }
-);
-
+  reveals.forEach(element => observer.observe(element));
+});
 
 /* =========================
    FLOATING PARTICLES
 ========================= */
 
 (function () {
-
-  const canvas =
-    document.getElementById("fx-canvas");
-
-  const ctx =
-    canvas.getContext("2d");
+  const canvas = document.getElementById("fx-canvas");
+  const ctx = canvas.getContext("2d");
 
   let width;
   let height;
-
   let particles = [];
 
   function resize() {
-
-    width =
-      canvas.width =
-      window.innerWidth;
-
-    height =
-      canvas.height =
-      window.innerHeight;
-
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
   }
 
-  window.addEventListener(
-    "resize",
-    resize
-  );
-
+  window.addEventListener("resize", resize);
   resize();
 
-
   class Particle {
-
     constructor() {
-
       this.reset(true);
-
     }
 
     reset(init = false) {
-
-      this.x =
-        Math.random() * width;
-
-      this.y =
-        init
-        ? Math.random() * height
-        : height + 10;
-
-      this.size =
-        Math.random() * 2 + 1;
-
-      this.speedY =
-        -(Math.random() * .4 + .15);
-
-      this.speedX =
-        (Math.random() - .5) * .3;
-
-      this.alpha =
-        Math.random() * .5 + .2;
-
+      this.x = Math.random() * width;
+      this.y = init ? Math.random() * height : height + 10;
+      this.size = Math.random() * 2 + 1;
+      this.speedY = -(Math.random() * .4 + .15);
+      this.speedX = (Math.random() - .5) * .3;
+      this.alpha = Math.random() * .5 + .2;
     }
 
     update() {
-
-      this.y +=
-        this.speedY;
-
-      this.x +=
-        this.speedX;
-
-      if (
-        this.y < -20
-      ) {
-
+      this.y += this.speedY;
+      this.x += this.speedX;
+      if (this.y < -20) {
         this.reset();
-
       }
-
     }
 
     draw() {
-
       ctx.beginPath();
-
-      ctx.arc(
-        this.x,
-        this.y,
-        this.size,
-        0,
-        Math.PI * 2
-      );
-
-      ctx.fillStyle =
-        `rgba(242,198,109,${this.alpha})`;
-
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(242,198,109,${this.alpha})`;
       ctx.fill();
-
     }
-
   }
 
+  const count = Math.min(Math.floor(window.innerWidth / 18), 50);
 
-  const count =
-    Math.min(
-      Math.floor(
-        window.innerWidth / 18
-      ),
-      50
-    );
-
-  for (
-    let i = 0;
-    i < count;
-    i++
-  ) {
-
-    particles.push(
-      new Particle()
-    );
-
+  for (let i = 0; i < count; i++) {
+    particles.push(new Particle());
   }
-
 
   function animate() {
-
-    ctx.clearRect(
-      0,
-      0,
-      width,
-      height
-    );
-
-    particles.forEach(
-      particle => {
-
-        particle.update();
-
-        particle.draw();
-
-      }
-    );
-
-    requestAnimationFrame(
-      animate
-    );
-
+    ctx.clearRect(0, 0, width, height);
+    particles.forEach(particle => {
+      particle.update();
+      particle.draw();
+    });
+    requestAnimationFrame(animate);
   }
 
   animate();
-
 })();
 
 </script>
