@@ -66,7 +66,7 @@ body {
 }
 
 .gate-card {
-  max-width: 380px;
+  max-width: 390px;
   width: 100%;
   padding: 40px 24px;
   border-radius: 14px;
@@ -90,11 +90,13 @@ body {
   font-size: 18px;
   color: var(--cream-soft);
   margin-bottom: 24px;
+  line-height: 1.5;
 }
 
 .open-invite-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 12px 28px;
   border-radius: 30px;
@@ -104,7 +106,7 @@ body {
   font-family: 'Cinzel', serif;
   font-size: 11px;
   letter-spacing: 0.18em;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   box-shadow: 0 0 20px rgba(242, 198, 109, 0.6);
   transition: all 0.3s ease;
@@ -116,7 +118,7 @@ body {
 }
 
 /* =========================
-   BACKGROUNDS & MULTI-IMAGE BACKDROP
+   BACKGROUNDS & MULTI-LAYER BACKDROP
 ========================= */
 
 .bg-ambient {
@@ -134,11 +136,105 @@ body {
   animation: ambientShift 10s ease-in-out infinite alternate;
 }
 
+/* Clouds Layer Behind Temple (z-index: 1) — stays BELOW .bg-art-backdrop (z-index: 2) */
+.bg-clouds-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+
+.cloud-item {
+  position: absolute;
+  pointer-events: none;
+  filter: sepia(100%) hue-rotate(5deg) saturate(200%) brightness(88%) contrast(110%) drop-shadow(0 0 15px rgba(242, 198, 109, 0.35));
+  will-change: transform;
+}
+
+/* Compact clouds moving behind temple peak */
+.cloud-1 {
+  top: 6%;
+  width: min(170px, 32vw);
+  animation: moveLeftToRight 36s linear infinite;
+}
+
+.cloud-2 {
+  top: 13%;
+  width: min(200px, 36vw);
+  animation: moveRightToLeft 42s linear infinite;
+  animation-delay: -10s;
+}
+
+.cloud-3 {
+  top: 20%;
+  width: min(180px, 34vw);
+  animation: moveRightToLeft 32s linear infinite;
+  animation-delay: -20s;
+}
+
+.cloud-4 {
+  top: 26%;
+  width: min(150px, 28vw);
+  animation: moveLeftToRight 46s linear infinite;
+  animation-delay: -15s;
+}
+
+@keyframes moveLeftToRight {
+  0% {
+    transform: translateX(-120vw);
+  }
+  100% {
+    transform: translateX(120vw);
+  }
+}
+
+@keyframes moveRightToLeft {
+  0% {
+    transform: translateX(120vw);
+  }
+  100% {
+    transform: translateX(-120vw);
+  }
+}
+
+/* Veil (z-index: 2) — sits between clouds and temple; dims clouds directly
+   behind the temple silhouette so they don't visually wash over faint artwork,
+   while still letting them peek out around the edges. */
+.bg-veil {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+
+.bg-veil::before {
+  content: "";
+  width: min(650px, 70vw);
+  height: 70vh;
+  background: radial-gradient(
+    ellipse at center,
+    var(--maroon-deep) 0%,
+    rgba(33, 9, 10, 0.85) 45%,
+    transparent 75%
+  );
+  filter: blur(6px);
+}
+
+/* Temple & Sacred Art Layer (z-index: 3) — stays ABOVE .bg-veil (z-index: 2)
+   and .bg-clouds-layer (z-index: 1) */
 .bg-art-backdrop {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 0;
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -172,14 +268,14 @@ body {
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
+  z-index: 4;
   pointer-events: none;
 }
 
 section,
 footer {
   position: relative;
-  z-index: 1;
+  z-index: 5;
 }
 
 .frame {
@@ -187,7 +283,7 @@ footer {
   margin: auto;
   padding: 0 24px;
   position: relative;
-  z-index: 5;
+  z-index: 6;
 }
 
 /* =========================
@@ -883,7 +979,6 @@ footer {
 
 <body>
 
-<!-- Tap to Open Gate Overlay -->
 <div id="invite-gate">
   <div class="gate-card">
     <h2 class="shimmer-lavender">Arundathi & Prabin</h2>
@@ -894,10 +989,8 @@ footer {
   </div>
 </div>
 
-<!-- Background Audio -->
 <audio id="bg-music" src="./song.mp3" loop preload="auto"></audio>
 
-<!-- Audio Play/Pause Button -->
 <button id="music-toggle" class="music-control-btn" aria-label="Toggle Background Music" title="Play / Pause Music">
   <svg viewBox="0 0 24 24">
     <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
@@ -906,19 +999,24 @@ footer {
 
 <div class="bg-ambient"></div>
 
-<!-- Background Elements for Sections -->
+<!-- Clouds layer: z-index 1, rendered behind the temple/havan/kalasha art (z-index 2) -->
+<div class="bg-clouds-layer" id="clouds-layer">
+  <img src="./cloud.png" class="cloud-item cloud-1" alt="Cloud">
+  <img src="./cloud.png" class="cloud-item cloud-2" alt="Cloud">
+  <img src="./cloud.png" class="cloud-item cloud-3" alt="Cloud">
+  <img src="./cloud.png" class="cloud-item cloud-4" alt="Cloud">
+</div>
+
+<div class="bg-veil" id="veil-layer"></div>
+
 <div class="bg-art-backdrop">
-  <!-- Page 2 (Invitation): Temple -->
   <img id="temple-img" src="./temple.png" alt="Temple Backdrop">
-  <!-- Page 3 (Countdown): Havan Kund -->
   <img id="havan-img" src="./havan%20kund.png" alt="Havan Kund Backdrop">
-  <!-- Last Page (Thank You): Purna Kalasha -->
   <img id="kalasha-img" src="./Purna%20Kalasha.png" alt="Purna Kalasha Backdrop">
 </div>
 
 <canvas id="fx-canvas"></canvas>
 
-<!-- 1ST PAGE (Hero) -->
 <section class="hero" id="page-hero">
 
   <div class="hero-inner">
@@ -966,7 +1064,6 @@ footer {
 
 </section>
 
-<!-- 2ND PAGE (Invitation With Temple Reveal) -->
 <section class="invite-block reveal" id="page-invite">
 
   <div class="pillar-side-drawing left-side">
@@ -1019,7 +1116,6 @@ footer {
 
 </section>
 
-<!-- 3RD PAGE (Countdown With Havan Kund Reveal) -->
 <section class="countdown-section reveal" id="page-countdown">
 
   <div class="countdown-title shimmer-lavender">
@@ -1156,7 +1252,6 @@ footer {
 
 </section>
 
-<!-- LAST PAGE (Thank You With Purna Kalasha Reveal) -->
 <section class="thank-you reveal" id="page-thankyou">
 
   <div class="murugar-container">
@@ -1191,12 +1286,14 @@ footer {
 <script>
 
 /* =========================
-   DYNAMIC SECTION SCROLL ART REVEAL
+   DYNAMIC SECTION SCROLL ART & CLOUDS REVEAL
 ========================= */
 
 const templeImg = document.getElementById("temple-img");
 const havanImg = document.getElementById("havan-img");
 const kalashaImg = document.getElementById("kalasha-img");
+const cloudsLayer = document.getElementById("clouds-layer");
+const veilLayer = document.getElementById("veil-layer");
 
 const pageHero = document.getElementById("page-hero");
 const pageInvite = document.getElementById("page-invite");
@@ -1207,7 +1304,6 @@ function computeSectionProgress(element) {
   if (!element) return 0;
   const rect = element.getBoundingClientRect();
   const vh = window.innerHeight;
-  // Progress goes from 0 (approaching from bottom) to 1 (centered/passed)
   const progress = (vh - rect.top) / (vh * 0.95);
   return Math.min(Math.max(progress, 0), 1);
 }
@@ -1235,6 +1331,17 @@ function handleScrollBackdrops() {
   applyArtTransform(templeImg, templeActiveProgress, 0.35);
   applyArtTransform(havanImg, havanActiveProgress, 0.32);
   applyArtTransform(kalashaImg, kalashaActiveProgress, 0.35);
+
+  // Smoothly display background clouds behind temple during Page 2
+  // Kept dim relative to the veil/temple so they read as background, not foreground
+  if (cloudsLayer) {
+    cloudsLayer.style.opacity = (templeActiveProgress * 0.22).toFixed(3);
+  }
+
+  // Veil fades in alongside the temple, dimming clouds directly behind its silhouette
+  if (veilLayer) {
+    veilLayer.style.opacity = templeActiveProgress.toFixed(3);
+  }
 }
 
 window.addEventListener("scroll", handleScrollBackdrops, { passive: true });
