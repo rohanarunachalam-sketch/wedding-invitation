@@ -2259,7 +2259,8 @@ function executeDoorSequence() {
   if (hasOpened) return;
   hasOpened = true;
 
-  playBell();
+  unlockBells();
+  setTimeout(playBell, 400);
   requestTilt();
 
   music.volume = 0;
@@ -2293,41 +2294,35 @@ function executeDoorSequence() {
 }
 
 /* Temple bell chime made with the Web Audio API */
-let bellCtx = null;
+/* Temple bell sample played through audio elements (audible even in silent mode) */
+const bellPool = Array.from({ length: 4 }, () => {
+  const a = new Audio("./temple-bell.wav");
+  a.preload = "auto";
+  return a;
+});
+let bellIndex = 0;
 
-function getBellCtx() {
-  const AC = window.AudioContext || window.webkitAudioContext;
-  if (!AC) return null;
-  if (!bellCtx) bellCtx = new AC();
-  if (bellCtx.state === "suspended") bellCtx.resume();
-  return bellCtx;
-}
-
-function strikeBell(ctx, t0, f, vol) {
-  [1, 2.76, 5.4].forEach((m, i) => {
-    const o = ctx.createOscillator();
-    const g = ctx.createGain();
-    o.type = "sine";
-    o.frequency.value = f * m;
-    g.gain.setValueAtTime(0.0001, t0);
-    g.gain.exponentialRampToValueAtTime((0.18 * vol) / (i + 1), t0 + 0.01);
-    g.gain.exponentialRampToValueAtTime(0.0001, t0 + 2.4 / (i + 1));
-    o.connect(g);
-    g.connect(ctx.destination);
-    o.start(t0);
-    o.stop(t0 + 2.5);
+function unlockBells() {
+  bellPool.forEach((a) => {
+    a.muted = true;
+    a.play().then(() => { a.pause(); a.currentTime = 0; a.muted = false; }).catch(() => { a.muted = false; });
   });
 }
 
-function playBell() {
+function playBellSample(vol) {
+  const a = bellPool[bellIndex++ % bellPool.length];
   try {
-    const ctx = getBellCtx();
-    if (!ctx) return;
-    const n = ctx.currentTime;
-    strikeBell(ctx, n, 660, 1);
-    strikeBell(ctx, n + 0.55, 660, 1);
-    strikeBell(ctx, n + 1.1, 880, 1);
+    a.pause();
+    a.currentTime = 0;
+    a.volume = Math.max(0, Math.min(1, vol));
+    a.play().catch(() => {});
   } catch (e) {}
+}
+
+function playBell() {
+  playBellSample(1);
+  setTimeout(() => playBellSample(0.9), 700);
+  setTimeout(() => playBellSample(1), 1400);
 }
 
 /* Single bell ring when the phone is shaken while the bells are on screen */
@@ -2340,28 +2335,15 @@ function ringBellOnShake(strength) {
   const now = Date.now();
   if (now - lastRing < 600) return;
   lastRing = now;
-  try {
-    const ctx = getBellCtx();
-    if (!ctx) return;
-    const vol = Math.min(1, 0.4 + strength / 40);
-    const t = ctx.currentTime;
-    strikeBell(ctx, t, 760 + Math.random() * 120, vol);
-    strikeBell(ctx, t + 0.18, 990 + Math.random() * 120, vol * 0.7);
-  } catch (e) {}
+  playBellSample(Math.min(1, 0.6 + strength / 50));
 }
 
 /* Card tilt following the phone's motion */
 function enableTilt() {
-  const targets = document.querySelectorAll(".journey-card, .marriage-quote-card");
+  /* only the thoranam leaves and bells follow the tilt; the page itself stays still */
   window.addEventListener("deviceorientation", (e) => {
-    if (e.gamma == null || e.beta == null) return;
-    const gx = Math.max(-25, Math.min(25, e.gamma)) / 25;
-    const gy = Math.max(-25, Math.min(25, e.beta - 45)) / 25;
-    const mag = Math.hypot(gx, gy);
+    if (e.gamma == null) return;
     tiltDeg = Math.max(-30, Math.min(30, e.gamma)) * 0.35;
-    targets.forEach((el) => {
-      el.style.rotate = mag > 0.02 ? `${-gy} ${gx} 0 ${(mag * 4).toFixed(2)}deg` : "none";
-    });
   }, { passive: true });
 }
 
