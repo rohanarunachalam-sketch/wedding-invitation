@@ -1514,13 +1514,13 @@ body.portal-entered .hero h1:nth-of-type(2) { animation-delay: 2.5s, 0s; }
 /* Lotus bloom behind hero names */
 .hero-inner > *:not(.lotus) { position: relative; z-index: 1; }
 .lotus { position: absolute; left: 50%; top: 50%; width: min(340px, 92%); aspect-ratio: 1;
-  transform: translate(-50%, -50%); opacity: .3; pointer-events: none; z-index: 0; overflow: visible; }
-.lotus path { fill: rgba(236,195,105,.08); stroke: var(--gold-bright); stroke-width: 1.2;
+  transform: translate(-50%, -50%); opacity: .5; pointer-events: none; z-index: 0; overflow: visible; }
+.lotus path { fill: rgba(40,110,130,.22); stroke: #3f8fa3; stroke-width: 1.2;
   transform: scale(0); transform-origin: 0 0; }
 body.portal-entered .lotus path { animation: lotusBloom 1.6s cubic-bezier(.2,.9,.3,1.2) forwards; animation-delay: calc(var(--p) * .12s + .6s); }
 @keyframes lotusBloom { to { transform: scale(1); } }
 body.portal-entered .lotus { animation: lotusGlow 4s ease-in-out 3s infinite alternate; }
-@keyframes lotusGlow { from { filter: drop-shadow(0 0 4px var(--gold-glow)); } to { filter: drop-shadow(0 0 18px var(--gold-glow-intense)); } }
+@keyframes lotusGlow { from { filter: drop-shadow(0 0 4px rgba(63,143,163,.35)); } to { filter: drop-shadow(0 0 16px rgba(63,143,163,.6)); } }
 
 /* Sun rays */
 .sun-rays { position: fixed; left: 50%; top: 0; width: 200vmax; height: 200vmax; pointer-events: none; z-index: 1;
@@ -2293,30 +2293,60 @@ function executeDoorSequence() {
 }
 
 /* Temple bell chime made with the Web Audio API */
+let bellCtx = null;
+
+function getBellCtx() {
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return null;
+  if (!bellCtx) bellCtx = new AC();
+  if (bellCtx.state === "suspended") bellCtx.resume();
+  return bellCtx;
+}
+
+function strikeBell(ctx, t0, f, vol) {
+  [1, 2.76, 5.4].forEach((m, i) => {
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = "sine";
+    o.frequency.value = f * m;
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime((0.18 * vol) / (i + 1), t0 + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + 2.4 / (i + 1));
+    o.connect(g);
+    g.connect(ctx.destination);
+    o.start(t0);
+    o.stop(t0 + 2.5);
+  });
+}
+
 function playBell() {
   try {
-    const AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC) return;
-    const ctx = new AC();
-    const strike = (t0, f) => {
-      [1, 2.76, 5.4].forEach((m, i) => {
-        const o = ctx.createOscillator();
-        const g = ctx.createGain();
-        o.type = "sine";
-        o.frequency.value = f * m;
-        g.gain.setValueAtTime(0.0001, t0);
-        g.gain.exponentialRampToValueAtTime(0.18 / (i + 1), t0 + 0.01);
-        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 2.4 / (i + 1));
-        o.connect(g);
-        g.connect(ctx.destination);
-        o.start(t0);
-        o.stop(t0 + 2.5);
-      });
-    };
+    const ctx = getBellCtx();
+    if (!ctx) return;
     const n = ctx.currentTime;
-    strike(n, 660);
-    strike(n + 0.55, 660);
-    strike(n + 1.1, 880);
+    strikeBell(ctx, n, 660, 1);
+    strikeBell(ctx, n + 0.55, 660, 1);
+    strikeBell(ctx, n + 1.1, 880, 1);
+  } catch (e) {}
+}
+
+/* Single bell ring when the phone is shaken while the bells are on screen */
+let lastRing = 0;
+function ringBellOnShake(strength) {
+  const b = document.querySelector(".bell");
+  if (!b) return;
+  const r = b.getBoundingClientRect();
+  if (r.bottom <= 0 || r.top >= window.innerHeight) return;
+  const now = Date.now();
+  if (now - lastRing < 600) return;
+  lastRing = now;
+  try {
+    const ctx = getBellCtx();
+    if (!ctx) return;
+    const vol = Math.min(1, 0.4 + strength / 40);
+    const t = ctx.currentTime;
+    strikeBell(ctx, t, 760 + Math.random() * 120, vol);
+    strikeBell(ctx, t + 0.18, 990 + Math.random() * 120, vol * 0.7);
   } catch (e) {}
 }
 
@@ -2363,6 +2393,8 @@ function enableMotion(hasMotion) {
       const ax = Math.max(-25, Math.min(25, acc.x || 0));
       const az = Math.max(-25, Math.min(25, acc.z || 0));
       swingers.forEach((s) => { s.v += (-ax * 0.45 + az * 0.15) * s.gain; });
+      const mag = Math.hypot(acc.x || 0, acc.y || 0, acc.z || 0);
+      if (mag > 14) ringBellOnShake(mag);
     }, { passive: true });
   }
 
