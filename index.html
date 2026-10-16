@@ -1484,6 +1484,121 @@ body.portal-entered .thoranam { opacity: .9; }
   .kolam .pulli { opacity: 1; animation: none !important; }
   .time-number.flip { animation: none; }
 }
+
+/* OPTION 1: pillars as corner pieces, card at full width */
+@media (max-width: 600px) {
+  .invite-block { padding: 150px 0 140px; }
+  .pillar-side-drawing { width: 96px; }
+  .pillar-side-drawing img { display: none; }
+  .pillar-side-drawing::before,
+  .pillar-side-drawing::after {
+    content: ""; position: absolute; left: 0; width: 100%;
+    background: url("./pillar.png") no-repeat; background-size: 197px auto;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,.7));
+  }
+  .pillar-side-drawing::before { top: 0; height: 152px; background-position: 0 0; }
+  .pillar-side-drawing::after { bottom: 0; height: 134px; background-position: 0 100%; }
+  #page-invite .frame { padding: 30px 16px; }
+}
+
+/* =========================
+   MORE ANIMATIONS
+========================= */
+
+/* Names written in */
+body:not(.portal-entered) .hero h1 { clip-path: inset(0 100% 0 0); }
+body.portal-entered .hero h1 { animation: writeIn 1.8s cubic-bezier(.4,0,.2,1) .9s both, textShimmer 4s linear infinite; }
+body.portal-entered .hero h1:nth-of-type(2) { animation-delay: 2.5s, 0s; }
+@keyframes writeIn { from { clip-path: inset(-10% 100% -10% -5%); } to { clip-path: inset(-10% -5% -10% -5%); } }
+
+/* Lotus bloom behind hero names */
+.hero-inner > *:not(.lotus) { position: relative; z-index: 1; }
+.lotus { position: absolute; left: 50%; top: 50%; width: min(340px, 92%); aspect-ratio: 1;
+  transform: translate(-50%, -50%); opacity: .3; pointer-events: none; z-index: 0; overflow: visible; }
+.lotus path { fill: rgba(236,195,105,.08); stroke: var(--gold-bright); stroke-width: 1.2;
+  transform: scale(0); transform-origin: 0 0; }
+body.portal-entered .lotus path { animation: lotusBloom 1.6s cubic-bezier(.2,.9,.3,1.2) forwards; animation-delay: calc(var(--p) * .12s + .6s); }
+@keyframes lotusBloom { to { transform: scale(1); } }
+body.portal-entered .lotus { animation: lotusGlow 4s ease-in-out 3s infinite alternate; }
+@keyframes lotusGlow { from { filter: drop-shadow(0 0 4px var(--gold-glow)); } to { filter: drop-shadow(0 0 18px var(--gold-glow-intense)); } }
+
+/* Sun rays */
+.sun-rays { position: fixed; left: 50%; top: 0; width: 200vmax; height: 200vmax; pointer-events: none; z-index: 1;
+  translate: -50% calc(-50% + var(--py, 0px));
+  background: repeating-conic-gradient(from 0deg at 50% 50%, rgba(255,232,163,.11) 0deg 4deg, transparent 4deg 14deg);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 0, transparent 35%);
+  mask-image: radial-gradient(circle at 50% 50%, #000 0, transparent 35%);
+  opacity: 0; transition: opacity 2.5s ease 1s; animation: raySpin 140s linear infinite; }
+body.portal-entered .sun-rays { opacity: .8; }
+@keyframes raySpin { from { rotate: 0deg; } to { rotate: 360deg; } }
+
+/* Tilt on phones */
+.events .frame, #page-invite .frame { perspective: 900px; }
+.reveal { transition: opacity 1s ease, transform 1s ease, rotate .25s ease-out; }
+
+/* Journey path travelling dot */
+.journey-connector { position: relative; }
+.connector-dot { position: absolute; left: 50%; top: 0; width: 8px; height: 8px; margin-left: -4px; border-radius: 50%;
+  background: var(--gold-highlight); box-shadow: 0 0 12px 3px var(--gold-glow-intense);
+  animation: dotTravel 2.8s ease-in-out infinite; pointer-events: none; }
+@keyframes dotTravel { 0% { top: 0; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { top: calc(100% - 8px); opacity: 0; } }
+
+/* Havan flicker and kalasam glow */
+#havan-img { animation: havanFlicker 2.4s ease-in-out infinite alternate; }
+@keyframes havanFlicker {
+  from { filter: sepia(90%) hue-rotate(10deg) saturate(250%) brightness(105%) contrast(115%) drop-shadow(0 0 25px var(--gold-glow)); }
+  to { filter: sepia(90%) hue-rotate(10deg) saturate(280%) brightness(128%) contrast(115%) drop-shadow(0 0 50px var(--gold-glow-intense)); }
+}
+#kalasha-img { animation: kalashaGlow 3.6s ease-in-out infinite alternate; }
+@keyframes kalashaGlow {
+  from { filter: sepia(90%) hue-rotate(10deg) saturate(250%) brightness(112%) contrast(115%) drop-shadow(0 0 25px var(--gold-glow)); }
+  to { filter: sepia(90%) hue-rotate(10deg) saturate(260%) brightness(125%) contrast(115%) drop-shadow(0 0 48px var(--gold-glow-intense)); }
+}
+
+/* Rangoli corners that grow with scroll */
+.rangoli { position: fixed; bottom: 0; width: 130px; height: 130px; pointer-events: none; z-index: 4; opacity: .6; --grow: 0; }
+.rangoli.rg-left { left: 0; }
+.rangoli.rg-right { right: 0; transform: scaleX(-1); }
+.rangoli path, .rangoli circle.ring { fill: none; stroke: var(--gold-bright); stroke-width: 1.2; stroke-linecap: round;
+  stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--grow)); }
+.rangoli .rd { fill: var(--gold-light); stroke: none; opacity: var(--grow); }
+
+/* Tap blessing */
+.tap-spark { position: fixed; z-index: 99990; pointer-events: none; color: var(--gold-bright); font-size: 15px;
+  text-shadow: 0 0 8px var(--gold-glow-intense); transform: translate(-50%, -50%); animation: sparkOut .9s ease-out forwards; }
+@keyframes sparkOut { to { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(.3) rotate(140deg); opacity: 0; } }
+
+/* Murugan halo */
+.murugar-container { position: relative; }
+.murugar-container::before { content: ""; position: absolute; inset: -18%; border-radius: 50%; z-index: 0;
+  background: radial-gradient(circle, rgba(255,232,163,.45), transparent 68%); animation: halo 3.4s ease-in-out infinite alternate; }
+.murugar-container img { position: relative; z-index: 1; }
+@keyframes halo { from { opacity: .35; transform: scale(.92); } to { opacity: 1; transform: scale(1.08); } }
+
+/* Language cross-fade */
+body.lang-switching .lang-en, body.lang-switching .lang-ta { animation: langFade .45s ease both; }
+@keyframes langFade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Monogram ring */
+.monogram { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 96px; height: 96px; }
+.monogram::before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--gold-antique); }
+.monogram::after { content: ""; position: absolute; inset: 0; border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0 80%, var(--gold-highlight) 100%);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+  animation: ringSpin 5s linear infinite; }
+@keyframes ringSpin { to { transform: rotate(360deg); } }
+
+@media (max-width: 600px) { .rangoli { width: 90px; height: 90px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  body:not(.portal-entered) .hero h1 { clip-path: none; }
+  body.portal-entered .hero h1 { animation: none; }
+  .lotus path { transform: none; animation: none !important; }
+  .lotus, .sun-rays, .connector-dot, #havan-img, #kalasha-img, .murugar-container::before,
+  .monogram::after, body.lang-switching .lang-en, body.lang-switching .lang-ta { animation: none !important; }
+  .connector-dot { display: none; }
+}
 </style>
 </head>
 <body>
@@ -1573,6 +1688,8 @@ body.portal-entered .thoranam { opacity: .9; }
 
 <div class="bg-ambient"></div>
 
+<div class="sun-rays" id="sun-rays" aria-hidden="true"></div>
+
 <div class="bg-clouds-layer" id="clouds-layer">
   <img src="./cloud.png" class="cloud-item cloud-1" alt="Cloud">
   <img src="./cloud.png" class="cloud-item cloud-2" alt="Cloud">
@@ -1590,12 +1707,56 @@ body.portal-entered .thoranam { opacity: .9; }
 
 <canvas id="fx-canvas"></canvas>
 
+<svg class="rangoli rg-left" id="rangoli-left" viewBox="0 0 120 120" aria-hidden="true">
+  <path pathLength="1" d="M30 120 A30 30 0 0 0 0 90"/>
+  <path pathLength="1" d="M55 120 A55 55 0 0 0 0 65"/>
+  <path pathLength="1" d="M80 120 A80 80 0 0 0 0 40"/>
+  <path pathLength="1" d="M105 120 A105 105 0 0 0 0 15"/>
+  <circle class="ring" pathLength="1" cx="21.2" cy="98.8" r="6"/>
+  <circle class="ring" pathLength="1" cx="38.9" cy="81.1" r="6"/>
+  <circle class="ring" pathLength="1" cx="56.6" cy="63.4" r="6"/>
+  <circle class="ring" pathLength="1" cx="74.2" cy="45.8" r="6"/>
+  <circle class="rd" cx="21.2" cy="98.8" r="1.8"/>
+  <circle class="rd" cx="38.9" cy="81.1" r="1.8"/>
+  <circle class="rd" cx="56.6" cy="63.4" r="1.8"/>
+  <circle class="rd" cx="74.2" cy="45.8" r="1.8"/>
+</svg>
+<svg class="rangoli rg-right" id="rangoli-right" viewBox="0 0 120 120" aria-hidden="true">
+  <path pathLength="1" d="M30 120 A30 30 0 0 0 0 90"/>
+  <path pathLength="1" d="M55 120 A55 55 0 0 0 0 65"/>
+  <path pathLength="1" d="M80 120 A80 80 0 0 0 0 40"/>
+  <path pathLength="1" d="M105 120 A105 105 0 0 0 0 15"/>
+  <circle class="ring" pathLength="1" cx="21.2" cy="98.8" r="6"/>
+  <circle class="ring" pathLength="1" cx="38.9" cy="81.1" r="6"/>
+  <circle class="ring" pathLength="1" cx="56.6" cy="63.4" r="6"/>
+  <circle class="ring" pathLength="1" cx="74.2" cy="45.8" r="6"/>
+  <circle class="rd" cx="21.2" cy="98.8" r="1.8"/>
+  <circle class="rd" cx="38.9" cy="81.1" r="1.8"/>
+  <circle class="rd" cx="56.6" cy="63.4" r="1.8"/>
+  <circle class="rd" cx="74.2" cy="45.8" r="1.8"/>
+</svg>
+
 <!-- =========================
      PAGE 1: HERO & WELCOME
 ========================= -->
 <section class="hero" id="page-hero">
 
   <div class="hero-inner">
+
+    <svg class="lotus" viewBox="-100 -100 200 200" aria-hidden="true">
+      <g transform="rotate(0)"><path style="--p:0" d="M0 0 C 18 -30, 18 -70, 0 -92 C -18 -70, -18 -30, 0 0Z"/></g>
+      <g transform="rotate(45)"><path style="--p:1" d="M0 0 C 18 -30, 18 -70, 0 -92 C -18 -70, -18 -30, 0 0Z"/></g>
+      <g transform="rotate(90)"><path style="--p:2" d="M0 0 C 18 -30, 18 -70, 0 -92 C -18 -70, -18 -30, 0 0Z"/></g>
+      <g transform="rotate(135)"><path style="--p:3" d="M0 0 C 18 -30, 18 -70, 0 -92 C -18 -70, -18 -30, 0 0Z"/></g>
+      <g transform="rotate(180)"><path style="--p:4" d="M0 0 C 18 -30, 18 -70, 0 -92 C -18 -70, -18 -30, 0 0Z"/></g>
+      <g transform="rotate(225)"><path style="--p:5" d="M0 0 C 18 -30, 18 -70, 0 -92 C -18 -70, -18 -30, 0 0Z"/></g>
+      <g transform="rotate(270)"><path style="--p:6" d="M0 0 C 18 -30, 18 -70, 0 -92 C -18 -70, -18 -30, 0 0Z"/></g>
+      <g transform="rotate(315)"><path style="--p:7" d="M0 0 C 18 -30, 18 -70, 0 -92 C -18 -70, -18 -30, 0 0Z"/></g>
+      <g transform="rotate(22.5) scale(.62)"><path style="--p:8" d="M0 0 C 18 -30, 18 -70, 0 -92 C -18 -70, -18 -30, 0 0Z"/></g>
+      <g transform="rotate(112.5) scale(.62)"><path style="--p:9" d="M0 0 C 18 -30, 18 -70, 0 -92 C -18 -70, -18 -30, 0 0Z"/></g>
+      <g transform="rotate(202.5) scale(.62)"><path style="--p:10" d="M0 0 C 18 -30, 18 -70, 0 -92 C -18 -70, -18 -30, 0 0Z"/></g>
+      <g transform="rotate(292.5) scale(.62)"><path style="--p:11" d="M0 0 C 18 -30, 18 -70, 0 -92 C -18 -70, -18 -30, 0 0Z"/></g>
+    </svg>
 
     <div class="ganesha-container">
       <svg viewBox="0 0 100 100">
@@ -1873,6 +2034,7 @@ body.portal-entered .thoranam { opacity: .9; }
     </div>
 
     <div class="journey-connector reveal">
+      <span class="connector-dot" aria-hidden="true"></span>
       <div class="connector-line"></div>
       <div class="connector-arrow">↓</div>
       <div class="connector-line"></div>
@@ -1977,6 +2139,9 @@ const langToggleBtn = document.getElementById("lang-toggle");
 const langBadgeText = document.getElementById("lang-badge-text");
 
 function setLanguage(isTamil) {
+  document.body.classList.add("lang-switching");
+  clearTimeout(window.__langTimer);
+  window.__langTimer = setTimeout(() => document.body.classList.remove("lang-switching"), 500);
   if (isTamil) {
     document.body.classList.add("lang-ta");
     langBadgeText.textContent = "ENG";
@@ -2046,6 +2211,16 @@ function handleScrollBackdrops() {
     veilLayer.style.opacity = (templeActiveProgress * 0.50).toFixed(3);
   }
 
+  /* parallax, rangoli growth, embers and kalasam petals */
+  const sy = window.scrollY || document.documentElement.scrollTop;
+  if (cloudsLayer) cloudsLayer.style.transform = `translateY(${(-sy * 0.06).toFixed(1)}px)`;
+  const rays = document.getElementById("sun-rays");
+  if (rays) rays.style.setProperty("--py", `${(-sy * 0.04).toFixed(1)}px`);
+  const grow = Math.min(1, inviteProgress * 1.1).toFixed(3);
+  document.querySelectorAll(".rangoli").forEach(r => r.style.setProperty("--grow", grow));
+  window.__ember = havanActiveProgress;
+  window.__petalBoost = thankyouProgress > 0.5;
+
   if (scrollIndicator) {
     const scrollY = window.scrollY || document.documentElement.scrollTop;
     if (scrollY > 120) {
@@ -2084,8 +2259,18 @@ function executeDoorSequence() {
   if (hasOpened) return;
   hasOpened = true;
 
+  playBell();
+  requestTilt();
+
+  music.volume = 0;
   music.play().then(() => {
     setMusicUI(true);
+    let v = 0;
+    const fade = setInterval(() => {
+      v = Math.min(1, v + 0.05);
+      try { music.volume = v; } catch (e) {}
+      if (v >= 1) clearInterval(fade);
+    }, 200);
   }).catch((err) => {
     console.log("Audio playback error:", err);
     setMusicUI(false);
@@ -2106,6 +2291,79 @@ function executeDoorSequence() {
     }, 1250);
   }, 500);
 }
+
+/* Temple bell chime made with the Web Audio API */
+function playBell() {
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    const ctx = new AC();
+    const strike = (t0, f) => {
+      [1, 2.76, 5.4].forEach((m, i) => {
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = "sine";
+        o.frequency.value = f * m;
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.exponentialRampToValueAtTime(0.18 / (i + 1), t0 + 0.01);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 2.4 / (i + 1));
+        o.connect(g);
+        g.connect(ctx.destination);
+        o.start(t0);
+        o.stop(t0 + 2.5);
+      });
+    };
+    const n = ctx.currentTime;
+    strike(n, 660);
+    strike(n + 0.55, 660);
+    strike(n + 1.1, 880);
+  } catch (e) {}
+}
+
+/* Card tilt following the phone's motion */
+function enableTilt() {
+  const targets = document.querySelectorAll(".journey-card, .marriage-quote-card");
+  window.addEventListener("deviceorientation", (e) => {
+    if (e.gamma == null || e.beta == null) return;
+    const gx = Math.max(-25, Math.min(25, e.gamma)) / 25;
+    const gy = Math.max(-25, Math.min(25, e.beta - 45)) / 25;
+    const mag = Math.hypot(gx, gy);
+    targets.forEach((el) => {
+      el.style.rotate = mag > 0.02 ? `${-gy} ${gx} 0 ${(mag * 4).toFixed(2)}deg` : "none";
+    });
+  }, { passive: true });
+}
+
+function requestTilt() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  try {
+    if (typeof DeviceOrientationEvent !== "undefined" && typeof DeviceOrientationEvent.requestPermission === "function") {
+      DeviceOrientationEvent.requestPermission().then((r) => { if (r === "granted") enableTilt(); }).catch(() => {});
+    } else if ("DeviceOrientationEvent" in window) {
+      enableTilt();
+    }
+  } catch (e) {}
+}
+
+/* Tap blessing */
+document.addEventListener("pointerdown", (e) => {
+  if (!hasOpened) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (e.target.closest("a, button, #invite-gate")) return;
+  for (let i = 0; i < 12; i++) {
+    const s = document.createElement("span");
+    s.className = "tap-spark";
+    s.textContent = i % 3 ? "✦" : "❁";
+    const a = (i / 12) * Math.PI * 2 + Math.random() * 0.4;
+    const d = 40 + Math.random() * 50;
+    s.style.left = e.clientX + "px";
+    s.style.top = e.clientY + "px";
+    s.style.setProperty("--dx", (Math.cos(a) * d).toFixed(1) + "px");
+    s.style.setProperty("--dy", (Math.sin(a) * d).toFixed(1) + "px");
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 950);
+  }
+});
 
 doorWrapper.addEventListener("click", executeDoorSequence);
 gateBtn.addEventListener("click", executeDoorSequence);
@@ -2276,6 +2534,32 @@ document.addEventListener("DOMContentLoaded", () => {
     "rgba(215,65,75,ALPHA)"
   ];
 
+  /* Embers rising from the havan fire */
+  let embers = [];
+  class Ember {
+    constructor() {
+      this.x = width * 0.5 + (Math.random() - 0.5) * width * 0.45;
+      this.y = height * 0.72 + Math.random() * 30;
+      this.vy = -(Math.random() * 1.1 + 0.5);
+      this.vx = (Math.random() - 0.5) * 0.5;
+      this.life = 1;
+      this.size = Math.random() * 1.8 + 0.8;
+    }
+    update() {
+      this.y += this.vy;
+      this.x += this.vx + Math.sin(this.y * 0.05) * 0.3;
+      this.life -= 0.009;
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, ${Math.floor(120 + this.life * 90)}, 40, ${Math.max(this.life, 0).toFixed(2)})`;
+      ctx.fill();
+    }
+  }
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   let petalRainActive = false;
   let petalBurstRemaining = 0;
   let petalTrickleTimer = 0;
@@ -2351,6 +2635,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (petalRainActive) {
       spawnPetals();
+    }
+
+    if (!reduceMotion) {
+      if (window.__ember > 0.25 && embers.length < 60 && Math.random() < window.__ember * 0.4) {
+        embers.push(new Ember());
+      }
+      for (let i = embers.length - 1; i >= 0; i--) {
+        embers[i].update();
+        embers[i].draw();
+        if (embers[i].life <= 0) embers.splice(i, 1);
+      }
+      if (window.__petalBoost && petalRainActive && petals.length < 40 && Math.random() < 0.05) {
+        petals.push(new Petal(width / 2 + (Math.random() - 0.5) * 160));
+      }
     }
 
     for (let i = petals.length - 1; i >= 0; i--) {
