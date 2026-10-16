@@ -2331,7 +2331,7 @@ function enableTilt() {
   /* only the thoranam leaves and bells follow the tilt; the page itself stays still */
   window.addEventListener("deviceorientation", (e) => {
     if (e.gamma == null) return;
-    tiltDeg = Math.max(-30, Math.min(30, e.gamma)) * 0.35;
+    tiltDeg = -Math.max(-30, Math.min(30, e.gamma)) * 0.35;
   }, { passive: true });
 }
 
@@ -2362,9 +2362,11 @@ function enableMotion(hasMotion) {
       if (!acc) return;
       const ax = Math.max(-25, Math.min(25, acc.x || 0));
       const az = Math.max(-25, Math.min(25, acc.z || 0));
-      swingers.forEach((s) => { s.v += (-ax * 0.45 + az * 0.15) * s.gain; });
-      const mag = Math.hypot(acc.x || 0, acc.y || 0, acc.z || 0);
-      if (mag > 14) ringBellOnShake(mag);
+      swingers.forEach((s) => { s.v += -ax * 0.45 * s.gain; });
+      const ay = Math.abs(acc.y || 0);
+      const azAbs = Math.abs(acc.z || 0);
+      const axAbs = Math.abs(acc.x || 0);
+      if (axAbs > 10 && axAbs > ay * 1.3 && axAbs > azAbs * 1.3) ringBellOnShake(axAbs);
     }, { passive: true });
   }
 
