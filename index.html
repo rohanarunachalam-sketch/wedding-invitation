@@ -2328,19 +2328,74 @@ function enableTilt() {
     const gx = Math.max(-25, Math.min(25, e.gamma)) / 25;
     const gy = Math.max(-25, Math.min(25, e.beta - 45)) / 25;
     const mag = Math.hypot(gx, gy);
+    tiltDeg = Math.max(-30, Math.min(30, e.gamma)) * 0.35;
     targets.forEach((el) => {
       el.style.rotate = mag > 0.02 ? `${-gy} ${gx} 0 ${(mag * 4).toFixed(2)}deg` : "none";
     });
   }, { passive: true });
 }
 
+/* Thoranam leaves and bells swing with the phone's tilt and shake */
+let tiltDeg = 0;
+const swingers = [];
+let motionStarted = false;
+
+function enableMotion(hasMotion) {
+  if (motionStarted) return;
+  motionStarted = true;
+
+  document.querySelectorAll(".leaf-string, .bell").forEach((el, i) => {
+    swingers.push({
+      el,
+      a: 0,
+      v: 0,
+      last: 0,
+      k: 0.035 + (i % 5) * 0.006,
+      c: 0.05 + (i % 3) * 0.012,
+      gain: el.classList.contains("bell") ? 1.8 : 1
+    });
+  });
+
+  if (hasMotion) {
+    window.addEventListener("devicemotion", (e) => {
+      const acc = e.acceleration;
+      if (!acc) return;
+      const ax = Math.max(-25, Math.min(25, acc.x || 0));
+      const az = Math.max(-25, Math.min(25, acc.z || 0));
+      swingers.forEach((s) => { s.v += (-ax * 0.45 + az * 0.15) * s.gain; });
+    }, { passive: true });
+  }
+
+  function step() {
+    swingers.forEach((s) => {
+      s.v += -s.k * (s.a - tiltDeg * s.gain);
+      s.v *= 1 - s.c;
+      s.a = Math.max(-45, Math.min(45, s.a + s.v));
+      if (Math.abs(s.a - s.last) > 0.02) {
+        s.el.style.rotate = s.a.toFixed(2) + "deg";
+        s.last = s.a;
+      }
+    });
+    requestAnimationFrame(step);
+  }
+  step();
+}
+
 function requestTilt() {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   try {
-    if (typeof DeviceOrientationEvent !== "undefined" && typeof DeviceOrientationEvent.requestPermission === "function") {
-      DeviceOrientationEvent.requestPermission().then((r) => { if (r === "granted") enableTilt(); }).catch(() => {});
+    const needO = typeof DeviceOrientationEvent !== "undefined" && typeof DeviceOrientationEvent.requestPermission === "function";
+    const needM = typeof DeviceMotionEvent !== "undefined" && typeof DeviceMotionEvent.requestPermission === "function";
+    if (needO || needM) {
+      const pO = needO ? DeviceOrientationEvent.requestPermission() : Promise.resolve("granted");
+      const pM = needM ? DeviceMotionEvent.requestPermission() : Promise.resolve("granted");
+      Promise.all([pO, pM].map((p) => p.catch(() => "denied"))).then(([o, m]) => {
+        if (o === "granted") enableTilt();
+        if (o === "granted" || m === "granted") enableMotion(m === "granted");
+      });
     } else if ("DeviceOrientationEvent" in window) {
       enableTilt();
+      enableMotion(true);
     }
   } catch (e) {}
 }
