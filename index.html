@@ -2259,6 +2259,7 @@ function executeDoorSequence() {
   if (hasOpened) return;
   hasOpened = true;
 
+  unlockBells();
   requestTilt();
 
   music.volume = 0;
@@ -2289,6 +2290,40 @@ function executeDoorSequence() {
       inviteGate.classList.add("hidden");
     }, 1250);
   }, 500);
+}
+
+/* Temple bell recording (brass ghanta) played through audio elements, so it is audible even in silent mode */
+const bellPool = Array.from({ length: 3 }, () => {
+  const a = new Audio("./temple-bell.wav");
+  a.preload = "auto";
+  return a;
+});
+let bellIndex = 0;
+let lastRing = 0;
+
+function unlockBells() {
+  bellPool.forEach((a) => {
+    a.muted = true;
+    a.play().then(() => { a.pause(); a.currentTime = 0; a.muted = false; }).catch(() => { a.muted = false; });
+  });
+}
+
+/* Ring when the phone is shaken while the muhurtham bells are on screen */
+function ringBellOnShake(strength) {
+  const b = document.querySelector(".bell");
+  if (!b) return;
+  const r = b.getBoundingClientRect();
+  if (r.bottom <= 0 || r.top >= window.innerHeight) return;
+  const now = Date.now();
+  if (now - lastRing < 700) return;
+  lastRing = now;
+  const a = bellPool[bellIndex++ % bellPool.length];
+  try {
+    a.pause();
+    a.currentTime = 0;
+    a.volume = Math.min(1, 0.6 + strength / 50);
+    a.play().catch(() => {});
+  } catch (e) {}
 }
 
 /* Card tilt following the phone's motion */
@@ -2329,6 +2364,7 @@ function enableMotion(hasMotion) {
       const az = Math.max(-25, Math.min(25, acc.z || 0));
       swingers.forEach((s) => { s.v += (-ax * 0.45 + az * 0.15) * s.gain; });
       const mag = Math.hypot(acc.x || 0, acc.y || 0, acc.z || 0);
+      if (mag > 14) ringBellOnShake(mag);
     }, { passive: true });
   }
 
