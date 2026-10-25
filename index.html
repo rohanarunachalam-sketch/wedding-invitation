@@ -1474,6 +1474,20 @@ body.portal-entered .thoranam { opacity: .9; }
 }
 @keyframes bellSwing { from { transform: rotate(-9deg); } to { transform: rotate(9deg); } }
 
+/* Small helper notes: location hint under map buttons, shake hint under bells */
+.map-hint, .bell-hint {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--gold-light);
+  opacity: .9;
+  letter-spacing: .03em;
+}
+.map-hint { margin-top: 8px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.map-hint .hint-arrow { font-style: normal; font-size: 16px; animation: hintBob 1.6s ease-in-out infinite; }
+@keyframes hintBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+.bell-hint { margin: 14px auto 16px; max-width: 75%; }
+
 @media (prefers-reduced-motion: reduce) {
   .diya .flame { animation: none; transform: scale(1); opacity: 1; }
   .leaf-string, .bell, .music-control-btn.playing,
@@ -2003,6 +2017,11 @@ body.lang-switching .lang-en, body.lang-switching .lang-ta { animation: langFade
       <div class="bell b-left" aria-hidden="true"></div>
       <div class="bell b-right" aria-hidden="true"></div>
 
+      <p class="bell-hint">
+        <span class="lang-en">🔔 Shake your mobile to ring the bells and bless the couple</span>
+        <span class="lang-ta">🔔 மணமக்களை வாழ்த்த உங்கள் மொபைலை அசைத்து மணியை ஒலிக்கச் செய்யுங்கள்</span>
+      </p>
+
       <div class="journey-icon">
         🛕
       </div>
@@ -2068,6 +2087,12 @@ body.lang-switching .lang-en, body.lang-switching .lang-ta { animation: langFade
         <span class="lang-ta">கோவில் இருப்பிடம்</span>
       </a>
 
+      <div class="map-hint">
+        <span class="hint-arrow" aria-hidden="true">↑</span>
+        <span class="lang-en">Click here to see the location</span>
+        <span class="lang-ta">இருப்பிடத்தைக் காண இங்கே கிளிக் செய்யவும்</span>
+      </div>
+
     </div>
 
     <div class="journey-connector reveal">
@@ -2108,6 +2133,12 @@ body.lang-switching .lang-en, body.lang-switching .lang-ta { animation: langFade
         <span class="lang-en">VIEW MARRIAGE HALL LOCATION</span>
         <span class="lang-ta">திருமண மண்டப இருப்பிடம்</span>
       </a>
+
+      <div class="map-hint">
+        <span class="hint-arrow" aria-hidden="true">↑</span>
+        <span class="lang-en">Click here to see the location</span>
+        <span class="lang-ta">இருப்பிடத்தைக் காண இங்கே கிளிக் செய்யவும்</span>
+      </div>
 
     </div>
 
