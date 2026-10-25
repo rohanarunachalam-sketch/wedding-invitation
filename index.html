@@ -393,6 +393,38 @@ body.lang-ta .event-main-date {
   justify-content: center;
 }
 
+/* Murugan across the centre seam: each leaf carries one half, so he splits as the doors open */
+.door-leaf .door-panel-box:nth-child(2) { visibility: hidden; }
+.door-leaf .door-handle { display: none; }
+
+.door-murugan {
+  position: absolute;
+  top: 50%;
+  height: 58%;
+  aspect-ratio: 471.5 / 1668;
+  transform: translateY(-50%);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.door-left .door-murugan { right: 0; }
+.door-right .door-murugan { left: 0; }
+
+/* The mask sits on the full-width image, so both halves fade as one soft oval into the door */
+.door-murugan img {
+  position: absolute;
+  top: 0;
+  width: 200%;
+  height: 100%;
+  object-fit: cover;
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at center, #000 60%, transparent 100%);
+  mask-image: radial-gradient(ellipse 50% 50% at center, #000 60%, transparent 100%);
+}
+
+.door-left .door-murugan img { left: 0; }
+.door-right .door-murugan img { left: -100%; }
+
 .door-filigree {
   color: var(--gold-bright);
   font-size: 16px;
@@ -1684,6 +1716,7 @@ body.lang-switching .lang-en, body.lang-switching .lang-ta { animation: langFade
           <div class="door-panel-box"><span class="door-filigree">✦</span></div>
           <div class="door-panel-box"><span class="door-filigree">❁</span></div>
           <div class="door-panel-box"><span class="door-filigree">✦</span></div>
+          <div class="door-murugan"><img src="./murugan-pin.png" alt="Lord Murugan"></div>
           <div class="door-handle">
             <div class="handle-plate">
               <div class="handle-ring"></div>
@@ -1696,6 +1729,7 @@ body.lang-switching .lang-en, body.lang-switching .lang-ta { animation: langFade
           <div class="door-panel-box"><span class="door-filigree">✦</span></div>
           <div class="door-panel-box"><span class="door-filigree">❁</span></div>
           <div class="door-panel-box"><span class="door-filigree">✦</span></div>
+          <div class="door-murugan" aria-hidden="true"><img src="./murugan-pin.png" alt=""></div>
           <div class="door-handle">
             <div class="handle-plate">
               <div class="handle-ring"></div>
